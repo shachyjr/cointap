@@ -1,12 +1,6 @@
 const express = require('express');
 const path = require('path');
-const mongoose = require('mongoose');
-const { MONGO_URI } = require('./env.js');
-
-
-mongoose.connect(MONGO_URI,{useMongoClient: true}, () => {
-  console.log('database connection successful');
-})
+const bodyParser = require('body-parser');
 
 
 const PORT = process.env.PORT || 6789;
@@ -14,6 +8,7 @@ const PORT = process.env.PORT || 6789;
 const app = express();
 
 app.use(express.static('build'));
+app.use(bodyParser.json());
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
