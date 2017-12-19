@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Cell from '../Cell.jsx';
+import Cell from '../Cell';
 
 
 class Dashboard extends Component {

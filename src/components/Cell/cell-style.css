@@ -1,0 +1,9 @@
+.caret-up i {
+  color: green;
+}
+.caret-down i {
+  color: red;
+}
+.hide {
+  visibility: hidden;
+}
