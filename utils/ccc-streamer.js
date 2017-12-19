@@ -1,3 +1,7 @@
+/* * * * * * * * * *
+  All code in this file was obtained from https://github.com/cryptoqween/cryptoqween.github.io/blob/master/streamer/ccc-streamer-utilities.js  
+ * * * * * * * * * * */
+
 var CCC = CCC || {};
 
 CCC.STATIC = CCC.STATIC || {};
