@@ -26752,7 +26752,7 @@ var Dashboard = function (_Component) {
         'h1',
         null,
         'Hello world, WELCOME to coinTAP'
-      ), _react2.default.createElement(_Cell2.default, null)];
+      ), _react2.default.createElement(_Cell2.default, { type: 'BTC' })];
     }
   }]);
 
@@ -29925,28 +29925,29 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Cell = function (_Component) {
   _inherits(Cell, _Component);
 
-  function Cell() {
+  function Cell(props) {
     _classCallCheck(this, Cell);
 
-    var _this = _possibleConstructorReturn(this, (Cell.__proto__ || Object.getPrototypeOf(Cell)).call(this));
+    var _this = _possibleConstructorReturn(this, (Cell.__proto__ || Object.getPrototypeOf(Cell)).call(this, props));
 
-    _this.state = { name: '', price: '', change24Hour: '', change24HourPCT: '', flag: '' };
+    _this.state = { name: props.type, price: '', change24Hour: '', change24HourPCT: '', flags: '' };
     return _this;
   }
 
   _createClass(Cell, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      (0, _api.subToCurrentAgg)('BTC', function (err, currentData) {
-        console.log(currentData.PRICE);
-        console.log(currentData.CHANGE24HOUR);
+      var _this2 = this;
+
+      (0, _api.subToCurrentAgg)(this.state.name, function (err, currentData) {
+        var PRICE = currentData.PRICE,
+            CHANGE24HOUR = currentData.CHANGE24HOUR,
+            CHANGE24HOURPCT = currentData.CHANGE24HOURPCT,
+            FLAGS = currentData.FLAGS;
+
+        _this2.setState({ price: PRICE, change24Hour: CHANGE24HOUR, change24HourPCT: CHANGE24HOURPCT, flags: FLAGS });
       });
-      // if (CHANGE24HOUR) {
-      //   this.setState({ change24Hour: CHANGE24HOUR});
-      // }
-      // if (PRICE) {
-      //   this.setState({ price: PRICE});
-      // }
+
       // console.log(subToCurrentAgg('BTC'));
     }
   }, {
@@ -29968,6 +29969,10 @@ var Cell = function (_Component) {
         'div',
         { key: 'change-24-PCT' },
         this.state.change24HourPCT
+      ), _react2.default.createElement(
+        'div',
+        { key: 'flag' },
+        this.state.flags
       )];
     }
   }]);
@@ -30031,16 +30036,24 @@ var currentData = {};
 
 /* extract will modify the data recieved from the socket and extract/format the data desired and assign it to the currentData object */
 var extract = function extract(data) {
-  // console.log("Price: ", data.PRICE);
-  // console.log("24 hours: ", data.OPEN24HOUR);
+  // deconstruct and check existance because values that remain consistent will not be updates and will fall through as undefined
+  var PRICE = data.PRICE,
+      OPEN24HOUR = data.OPEN24HOUR,
+      FLAGS = data.FLAGS;
+
+  if (PRICE) currentData.PRICE = PRICE;
+  if (OPEN24HOUR) currentData.OPEN24HOUR = OPEN24HOUR;
+  if (FLAGS) currentData.FLAGS = FLAGS;
+
+  // TODO: Account for multiple cells of multiple currencies
+
   var from = data.FROMSYMBOL;
   var to = data.TOSYMBOL;
   var fsym = _cccStreamer2.default.STATIC.CURRENCY.getSymbol(from);
   var tsym = _cccStreamer2.default.STATIC.CURRENCY.getSymbol(to);
   var pair = from + to;
-  // console.log(CCC.convertValueToDisplay(tsym, (data.PRICE - data.OPEN24HOUR)));
-  currentData.CHANGE24HOUR = _cccStreamer2.default.convertValueToDisplay(tsym, data.PRICE - data.OPEN24HOUR);
-  currentData.PRICE = data.PRICE;
+  currentData.CHANGE24HOUR = tsym + ' ' + (currentData.PRICE - currentData.OPEN24HOUR).toFixed(2);
+  currentData.CHANGE24HOURPCT = ((currentData.PRICE - currentData.OPEN24HOUR) / currentData.OPEN24HOUR * 100).toFixed(2) + ' %';
 };
 
 var subToTrade = function subToTrade() {};
@@ -30049,7 +30062,9 @@ var subToCurrent = function subToCurrent() {};
 
 var subToCurrentAgg = function subToCurrentAgg(currency, callback) {
   var subscribe = ['5~CCCAGG~' + currency + '~USD'];
+
   socket.emit('SubAdd', { subs: subscribe });
+
   socket.on('m', function (message) {
     var messageType = message.slice(0, message.indexOf('~'));
     if (messageType === _cccStreamer2.default.STATIC.TYPE.CURRENTAGG) {

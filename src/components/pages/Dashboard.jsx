@@ -10,7 +10,8 @@ class Dashboard extends Component {
   render() {
     return [
       <h1>Hello world, WELCOME to coinTAP</h1>,
-      <Cell/>
+      <Cell type="BTC"/>,
+      // <Cell type="ETH"/>
     ];
   }
 }
