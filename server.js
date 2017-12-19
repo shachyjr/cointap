@@ -15,5 +15,5 @@ app.get('*', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`coinTAP listening on ${PORT}`)
+  console.log(`coinTAP listening on ${PORT}`);
 });
