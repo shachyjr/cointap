@@ -62,7 +62,9 @@ class Dashboard extends Component {
       <Cell key="ltc" currencyType="LTC"/>,
       <Cell key="xmr" currencyType="XMR"/>,
       <Cell key="dash" currencyType="DASH"/>,
-      <Cell key="nxt " currencyType="NXT"/>,
+      <Cell key="nxt" currencyType="NXT"/>,
+      <Cell key="zec" currencyType="ZEC"/>,
+      <Cell key="dgb " currencyType="DGB"/>
     ];
   }
 }
