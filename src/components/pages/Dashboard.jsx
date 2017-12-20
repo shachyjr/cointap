@@ -50,18 +50,19 @@ class Dashboard extends Component {
   //   });
   //   // console.log(subToCurrentAgg('BTC'));
   // }
+
   render() {
     return [
       <h1 key="heading">Hello world, WELCOME to coinTAP</h1>,
       // <Cell key="btc" currUpdates={this.state.BTC}/>,
       // <Cell key="eth" currUpdates={this.state.ETH}/>,
       // <Cell key="ltc" currUpdates={this.state.LTC}/>,
-      <Cell key="btc" type="BTC"/>,
-      <Cell key="eth" type="ETH"/>,
-      <Cell key="ltc" type="LTC"/>,
-      <Cell key="xmr" type="XMR"/>,
-      <Cell key="dash" type="DASH"/>,
-      <Cell key="nxt " type="NXT"/>,
+      <Cell key="btc" currencyType="BTC"/>,
+      <Cell key="eth" currencyType="ETH"/>,
+      <Cell key="ltc" currencyType="LTC"/>,
+      <Cell key="xmr" currencyType="XMR"/>,
+      <Cell key="dash" currencyType="DASH"/>,
+      <Cell key="nxt " currencyType="NXT"/>,
     ];
   }
 }
