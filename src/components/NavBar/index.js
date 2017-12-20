@@ -7,8 +7,8 @@ class NavBar extends Component {
     return [
       <NavLink key="dashboard-link" to="/">Dashboard</NavLink>,
       <NavLink key="track-link" to="/track">Track</NavLink>,
-      <button key="login-btn">Log In</button>,
-      <button key="register-btn">Register</button>,
+      <NavLink key="login-btn" to="/login">Log In</NavLink>,
+      <NavLink key="register-btn" to="/register">Register</NavLink>,
     ];
   }
 }
