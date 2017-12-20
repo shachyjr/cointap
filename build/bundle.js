@@ -26734,6 +26734,14 @@ var _Track = __webpack_require__(130);
 
 var _Track2 = _interopRequireDefault(_Track);
 
+var _Login = __webpack_require__(131);
+
+var _Login2 = _interopRequireDefault(_Login);
+
+var _Register = __webpack_require__(132);
+
+var _Register2 = _interopRequireDefault(_Register);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26748,12 +26756,57 @@ var App = function (_Component) {
   function App() {
     _classCallCheck(this, App);
 
-    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
+
+    _this.state = { name: '', username: '', password: '', email: '' };
+
+    _this.nameChange = _this.nameChange.bind(_this);
+    _this.userNameChange = _this.userNameChange.bind(_this);
+    _this.passwordChange = _this.passwordChange.bind(_this);
+    _this.emailChange = _this.emailChange.bind(_this);
+
+    _this.handleLogin = _this.handleLogin.bind(_this);
+    _this.handleRegister = _this.handleRegister.bind(_this);
+    return _this;
   }
 
   _createClass(App, [{
+    key: 'nameChange',
+    value: function nameChange(event) {
+      this.setState({ name: event.target.value });
+    }
+  }, {
+    key: 'userNameChange',
+    value: function userNameChange(event) {
+      this.setState({ username: event.target.value });
+    }
+  }, {
+    key: 'passwordChange',
+    value: function passwordChange(event) {
+      this.setState({ password: event.target.value });
+    }
+  }, {
+    key: 'emailChange',
+    value: function emailChange(event) {
+      this.setState({ email: event.target.value });
+    }
+  }, {
+    key: 'handleLogin',
+    value: function handleLogin(event) {
+      event.preventDefault();
+      console.log(this.state);
+    }
+  }, {
+    key: 'handleRegister',
+    value: function handleRegister(event) {
+      event.preventDefault();
+      console.log(this.state);
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       return [_react2.default.createElement(_NavBar2.default, null), _react2.default.createElement(
         _reactRouter.Switch,
         null,
@@ -26763,6 +26816,14 @@ var App = function (_Component) {
         ',',
         _react2.default.createElement(_reactRouter.Route, { path: '/track', render: function render() {
             return _react2.default.createElement(_Track2.default, null);
+          } }),
+        ',',
+        _react2.default.createElement(_reactRouter.Route, { path: '/login', render: function render() {
+            return _react2.default.createElement(_Login2.default, { handleLogin: _this2.handleLogin, userNameChange: _this2.userNameChange, passwordChange: _this2.passwordChange });
+          } }),
+        ',',
+        _react2.default.createElement(_reactRouter.Route, { path: '/register', render: function render() {
+            return _react2.default.createElement(_Register2.default, { handleRegister: _this2.handleRegister, nameChange: _this2.nameChange, userNameChange: _this2.userNameChange, emailChange: _this2.emailChange, passwordChange: _this2.passwordChange });
           } })
       )];
     }
@@ -26866,12 +26927,12 @@ var NavBar = function (_Component) {
         { key: 'track-link', to: '/track' },
         'Track'
       ), _react2.default.createElement(
-        'button',
-        { key: 'login-btn' },
+        _reactRouterDom.NavLink,
+        { key: 'login-btn', to: '/login' },
         'Log In'
       ), _react2.default.createElement(
-        'button',
-        { key: 'register-btn' },
+        _reactRouterDom.NavLink,
+        { key: 'register-btn', to: '/register' },
         'Register'
       )];
     }
@@ -31329,6 +31390,74 @@ var Track = function (_Component) {
 }(_react.Component);
 
 exports.default = Track;
+
+/***/ }),
+/* 131 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Login = function Login(_ref) {
+  var handleLogin = _ref.handleLogin,
+      userNameChange = _ref.userNameChange,
+      passwordChange = _ref.passwordChange;
+  return _react2.default.createElement(
+    "form",
+    { onSubmit: handleLogin },
+    _react2.default.createElement("input", { type: "text", onChange: userNameChange, placeholder: "username" }),
+    _react2.default.createElement("input", { type: "password", onChange: passwordChange, placeholder: "password" }),
+    _react2.default.createElement("input", { type: "submit", value: "Login" })
+  );
+};
+
+exports.default = Login;
+
+/***/ }),
+/* 132 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Register = function Register(_ref) {
+  var handleRegister = _ref.handleRegister,
+      nameChange = _ref.nameChange,
+      userNameChange = _ref.userNameChange,
+      emailChange = _ref.emailChange,
+      passwordChange = _ref.passwordChange;
+  return _react2.default.createElement(
+    "form",
+    { onSubmit: handleRegister },
+    _react2.default.createElement("input", { type: "text", onChange: nameChange, placeholder: "Name" }),
+    _react2.default.createElement("input", { type: "text", onChange: userNameChange, placeholder: "username" }),
+    _react2.default.createElement("input", { type: "text", onChange: emailChange, placeholder: "email" }),
+    _react2.default.createElement("input", { type: "password", onChange: passwordChange, placeholder: "password" }),
+    _react2.default.createElement("input", { type: "submit", value: "Login" })
+  );
+};
+
+exports.default = Register;
 
 /***/ })
 /******/ ]);
