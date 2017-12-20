@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import './navbar-style.css';
+import { NavLink } from 'react-router-dom';
+// import './navbar-style.css';
 
 class NavBar extends Component {
   render() {
     return [
-      <button>Log In</button>,
-      <button>Register</button>,
+      <NavLink key="dashboard-link" to="/">Dashboard</NavLink>,
+      <NavLink key="track-link" to="/track">Track</NavLink>,
+      <button key="login-btn">Log In</button>,
+      <button key="register-btn">Register</button>,
     ];
   }
 }
