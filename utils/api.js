@@ -31,6 +31,10 @@ const socket = io('https://streamer.cryptocompare.com');
 const currentData = {
   BTC: {},
   ETH: {},
+  LTC: {},
+  XMR: {},
+  DASH: {},
+  NXT: {},
 };
 
 /* extract will modify the data recieved from the socket and extract/format the data desired and assign it to the currentData object */
@@ -42,8 +46,6 @@ const extract = (data) => {
   if (FLAGS) currentData[FROMSYMBOL].FLAGS = FLAGS;
   if (FROMSYMBOL) currentData[FROMSYMBOL].FROMSYMBOL = FROMSYMBOL;
 
-  // TODO: Account for multiple cells of multiple currencies
-
   const from = data.FROMSYMBOL;
   const to = data.TOSYMBOL;
   // const fsym = CCC.STATIC.CURRENCY.getSymbol(from);
@@ -53,29 +55,20 @@ const extract = (data) => {
   currentData[FROMSYMBOL].CHANGE24HOURPCT = `${(((currentData[FROMSYMBOL].PRICE - currentData[FROMSYMBOL].OPEN24HOUR) / currentData[FROMSYMBOL].OPEN24HOUR) * 100).toFixed(2)}`;
 };
 
-const subToTrade = () => {};
-
-const subToCurrent = () => {};
-
+/* function subscribes to event on external socket, cleans up data, and envoke the specified callback */
 const subToCurrentAgg = (callback) => {
-  const subscribe = ['5~CCCAGG~BTC~USD', '5~CCCAGG~ETH~USD'];
+  const subscribe = ['5~CCCAGG~BTC~USD', '5~CCCAGG~ETH~USD', '5~CCCAGG~LTC~USD', '5~CCCAGG~XMR~USD', '5~CCCAGG~DASH~USD', '5~CCCAGG~NXT~USD'];
 
   socket.emit('SubAdd', { subs: subscribe });
 
   socket.on('m', (message) => {
-    // console.log(currentData);
     const messageType = message.slice(0, message.indexOf('~'));
     if (messageType === CCC.STATIC.TYPE.CURRENTAGG) {
       const data = CCC.CURRENT.unpack(message);
-      // console.log(data);
       extract(data);
       callback(null, currentData);
     }
   });
 };
 
-export {
-  subToTrade,
-  subToCurrent,
-  subToCurrentAgg,
-};
+export default subToCurrentAgg;

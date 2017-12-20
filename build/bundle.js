@@ -26741,6 +26741,7 @@ var Dashboard = function (_Component) {
   function Dashboard() {
     _classCallCheck(this, Dashboard);
 
+    return _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this));
     // this.state = {
     //   name: '',
     //   price: '',
@@ -26748,54 +26749,56 @@ var Dashboard = function (_Component) {
     //   change24HourPCT: '',
     //   flags: '',
     // };
-    var _this = _possibleConstructorReturn(this, (Dashboard.__proto__ || Object.getPrototypeOf(Dashboard)).call(this));
-
-    _this.state = {
-      BTC: {},
-      ETH: {}
-    };
-    return _this;
+    // this.state = {
+    //   BTC: {},
+    //   ETH: {},
+    //   LTC: {},
+    // }
   }
+  // componentDidMount() {
+  //   // console.log('COMPDID MOUNT');
+  //   subToCurrentAgg((err, currentData) => {
+  //     let { BTC, ETH, LTC } = currentData;
+  //     this.setState({
+  //       BTC: {
+  //         name: BTC.FROMSYMBOL,
+  //         price: BTC.PRICE,
+  //         change24Hour: BTC.CHANGE24HOUR,
+  //         change24HourPCT: BTC.CHANGE24HOURPCT,
+  //         flags: BTC.FLAGS,
+  //       },
+  //       ETH: {
+  //         name: ETH.FROMSYMBOL,
+  //         price: ETH.PRICE,
+  //         change24Hour: ETH.CHANGE24HOUR,
+  //         change24HourPCT: ETH.CHANGE24HOURPCT,
+  //         flags: ETH.FLAGS,
+  //       },
+  //       LTC: {
+  //         name: LTC.FROMSYMBOL,
+  //         price: LTC.PRICE,
+  //         change24Hour: LTC.CHANGE24HOUR,
+  //         change24HourPCT: LTC.CHANGE24HOURPCT,
+  //         flags: LTC.FLAGS,
+  //       },
+  //     });
+  //   });
+  //   // console.log(subToCurrentAgg('BTC'));
+  // }
+
 
   _createClass(Dashboard, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
-
-      // console.log('COMPDID MOUNT');
-      (0, _api.subToCurrentAgg)(function (err, currentData) {
-        console.log(currentData);
-        var BTC = currentData.BTC,
-            ETH = currentData.ETH;
-
-        _this2.setState({
-          BTC: {
-            name: BTC.FROMSYMBOL,
-            price: BTC.PRICE,
-            change24Hour: BTC.CHANGE24HOUR,
-            change24HourPCT: BTC.CHANGE24HOURPCT,
-            flags: BTC.FLAGS
-          },
-          ETH: {
-            name: ETH.FROMSYMBOL,
-            price: ETH.PRICE,
-            change24Hour: ETH.CHANGE24HOUR,
-            change24HourPCT: ETH.CHANGE24HOURPCT,
-            flags: ETH.FLAGS
-          }
-        });
-      });
-      // console.log(subToCurrentAgg('BTC'));
-    }
-  }, {
     key: 'render',
     value: function render() {
-      console.log("this is the state: ", this.state);
       return [_react2.default.createElement(
         'h1',
         { key: 'heading' },
         'Hello world, WELCOME to coinTAP'
-      ), _react2.default.createElement(_Cell2.default, { key: 'btc', currUpdates: this.state.BTC }), _react2.default.createElement(_Cell2.default, { key: 'eth', currUpdates: this.state.ETH })];
+      ),
+      // <Cell key="btc" currUpdates={this.state.BTC}/>,
+      // <Cell key="eth" currUpdates={this.state.ETH}/>,
+      // <Cell key="ltc" currUpdates={this.state.LTC}/>,
+      _react2.default.createElement(_Cell2.default, { key: 'btc', type: 'BTC' }), _react2.default.createElement(_Cell2.default, { key: 'eth', type: 'ETH' }), _react2.default.createElement(_Cell2.default, { key: 'ltc', type: 'LTC' }), _react2.default.createElement(_Cell2.default, { key: 'xmr', type: 'XMR' }), _react2.default.createElement(_Cell2.default, { key: 'dash', type: 'DASH' }), _react2.default.createElement(_Cell2.default, { key: 'nxt ', type: 'NXT' })];
     }
   }]);
 
@@ -26821,6 +26824,10 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _api = __webpack_require__(104);
+
+var _api2 = _interopRequireDefault(_api);
+
 __webpack_require__(99);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -26830,8 +26837,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-// import { subToCurrentAgg } from '../../../utils/api';
-
 
 var Cell = function (_Component) {
   _inherits(Cell, _Component);
@@ -26839,66 +26844,47 @@ var Cell = function (_Component) {
   function Cell(props) {
     _classCallCheck(this, Cell);
 
-    return _possibleConstructorReturn(this, (Cell.__proto__ || Object.getPrototypeOf(Cell)).call(this, props));
-    // this.state = {
-    //   name: '',
-    //   price: '',
-    //   change24Hour: '',
-    //   change24HourPCT: '',
-    //   flags: '',
-    // };
+    var _this = _possibleConstructorReturn(this, (Cell.__proto__ || Object.getPrototypeOf(Cell)).call(this, props));
+
+    _this.state = {
+      name: '',
+      price: '',
+      change24Hour: '',
+      change24HourPCT: '',
+      flags: ''
+    };
+    return _this;
   }
 
-  // componentDidMount() {
-  //   subToCurrentAgg((err, currentData) => {
-  //     const { PRICE, CHANGE24HOUR, CHANGE24HOURPCT, FLAGS, FROMSYMBOL } = currentData;
-  //     // console.log("FROMSYMBOL >>>>> ", FROMSYMBOL);
-  //     // console.log("props.type", this.props.type);
-  //     if (FROMSYMBOL === this.props.type) {
-  //       console.log(FROMSYMBOL, " | ", this.props.type);
-  //       this.setState({
-  //         name: FROMSYMBOL,
-  //         price: PRICE,
-  //         change24Hour: CHANGE24HOUR,
-  //         change24HourPCT: CHANGE24HOURPCT,
-  //         flags: FLAGS,
-  //       });
-  //     }
-  //   });
-  //   // console.log(subToCurrentAgg('BTC'));
-  // }
-
-  // render() {
-  //   // sets class for appropriate styling for increase or decrease
-  //   let flagState;
-  //   switch (this.state.flags) {
-  //     case '1':
-  //       flagState = 'caret-up';
-  //       break;
-  //     case '2':
-  //       flagState = 'caret-down';
-  //       break;
-  //   }
-
-  //   return [
-  //     <h4 key="currency-name">{this.state.name}</h4>,
-  //     <div>{this.props.type}</div>,
-  //     <div key="price">{this.state.price}</div>,
-  //     <div key="change-24">{this.state.change24Hour}</div>,
-  //     <div key="change-24-PCT">{this.state.change24HourPCT}</div>,
-  //     <i key="flag" className={`fa fa-${flagState} ${flagState}`}></i>,
-  //   ];
-  // }
-
-
   _createClass(Cell, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      (0, _api2.default)(function (err, currentData) {
+        var _currentData$props$ty = currentData[_this2.props.type],
+            PRICE = _currentData$props$ty.PRICE,
+            CHANGE24HOUR = _currentData$props$ty.CHANGE24HOUR,
+            CHANGE24HOURPCT = _currentData$props$ty.CHANGE24HOURPCT,
+            FLAGS = _currentData$props$ty.FLAGS,
+            FROMSYMBOL = _currentData$props$ty.FROMSYMBOL;
+
+        _this2.setState({
+          name: FROMSYMBOL,
+          price: PRICE,
+          change24Hour: CHANGE24HOUR,
+          change24HourPCT: CHANGE24HOURPCT,
+          flags: FLAGS
+        });
+      });
+      // console.log(subToCurrentAgg('BTC'));
+    }
+  }, {
     key: 'render',
     value: function render() {
       // sets class for appropriate styling for increase or decrease
-      var data = this.props.currUpdates;
-      console.log(this.props.currUpdates);
       var flagState = void 0;
-      switch (data.flags) {
+      switch (this.state.flags) {
         case '1':
           flagState = 'caret-up';
           break;
@@ -26910,25 +26896,45 @@ var Cell = function (_Component) {
       return [_react2.default.createElement(
         'h4',
         { key: 'currency-name' },
-        data.name
-      ), _react2.default.createElement(
-        'div',
-        null,
-        data.type
+        this.state.name
       ), _react2.default.createElement(
         'div',
         { key: 'price' },
-        data.price
+        this.state.price
       ), _react2.default.createElement(
         'div',
         { key: 'change-24' },
-        data.change24Hour
+        this.state.change24Hour
       ), _react2.default.createElement(
         'div',
         { key: 'change-24-PCT' },
-        data.change24HourPCT
+        this.state.change24HourPCT
       ), _react2.default.createElement('i', { key: 'flag', className: 'fa fa-' + flagState + ' ' + flagState })];
     }
+    // render() {
+    //   // sets class for appropriate styling for increase or decrease
+    //   const data = this.props.currUpdates;
+    //   console.log(this.props.currUpdates);
+    //   let flagState;
+    //   switch (data.flags) {
+    //     case '1':
+    //       flagState = 'caret-up';
+    //       break;
+    //     case '2':
+    //       flagState = 'caret-down';
+    //       break;
+    //   }
+
+    //   return [
+    //     <h4 key="currency-name">{data.name}</h4>,
+    //     <div>{data.type}</div>,
+    //     <div key="price">{data.price}</div>,
+    //     <div key="change-24">{data.change24Hour}</div>,
+    //     <div key="change-24-PCT">{data.change24HourPCT}</div>,
+    //     <i key="flag" className={`fa fa-${flagState} ${flagState}`}></i>,
+    //   ];
+    // }
+
   }]);
 
   return Cell;
@@ -27540,7 +27546,6 @@ module.exports = function (css) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.subToCurrentAgg = exports.subToCurrent = exports.subToTrade = undefined;
 
 var _socket = __webpack_require__(105);
 
@@ -27582,7 +27587,11 @@ var socket = (0, _socket2.default)('https://streamer.cryptocompare.com');
 
 var currentData = {
   BTC: {},
-  ETH: {}
+  ETH: {},
+  LTC: {},
+  XMR: {},
+  DASH: {},
+  NXT: {}
 };
 
 /* extract will modify the data recieved from the socket and extract/format the data desired and assign it to the currentData object */
@@ -27598,8 +27607,6 @@ var extract = function extract(data) {
   if (FLAGS) currentData[FROMSYMBOL].FLAGS = FLAGS;
   if (FROMSYMBOL) currentData[FROMSYMBOL].FROMSYMBOL = FROMSYMBOL;
 
-  // TODO: Account for multiple cells of multiple currencies
-
   var from = data.FROMSYMBOL;
   var to = data.TOSYMBOL;
   // const fsym = CCC.STATIC.CURRENCY.getSymbol(from);
@@ -27609,30 +27616,23 @@ var extract = function extract(data) {
   currentData[FROMSYMBOL].CHANGE24HOURPCT = '' + ((currentData[FROMSYMBOL].PRICE - currentData[FROMSYMBOL].OPEN24HOUR) / currentData[FROMSYMBOL].OPEN24HOUR * 100).toFixed(2);
 };
 
-var subToTrade = function subToTrade() {};
-
-var subToCurrent = function subToCurrent() {};
-
+/* function subscribes to event on external socket, cleans up data, and envoke the specified callback */
 var subToCurrentAgg = function subToCurrentAgg(callback) {
-  var subscribe = ['5~CCCAGG~BTC~USD', '5~CCCAGG~ETH~USD'];
+  var subscribe = ['5~CCCAGG~BTC~USD', '5~CCCAGG~ETH~USD', '5~CCCAGG~LTC~USD', '5~CCCAGG~XMR~USD', '5~CCCAGG~DASH~USD', '5~CCCAGG~NXT~USD'];
 
   socket.emit('SubAdd', { subs: subscribe });
 
   socket.on('m', function (message) {
-    // console.log(currentData);
     var messageType = message.slice(0, message.indexOf('~'));
     if (messageType === _cccStreamer2.default.STATIC.TYPE.CURRENTAGG) {
       var data = _cccStreamer2.default.CURRENT.unpack(message);
-      // console.log(data);
       extract(data);
       callback(null, currentData);
     }
   });
 };
 
-exports.subToTrade = subToTrade;
-exports.subToCurrent = subToCurrent;
-exports.subToCurrentAgg = subToCurrentAgg;
+exports.default = subToCurrentAgg;
 
 /***/ }),
 /* 105 */
