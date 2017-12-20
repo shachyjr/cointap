@@ -7,46 +7,47 @@ const UserController = {};
 
 UserController.add = (req, res) => {
   // check if user name already exists
-  User.find({ username: req.body.username }, (err, user) => {
-    if (err) return res.sendStatus(500);
-    if (user) {
+  User.findOne({ username: req.body.username }, (dbFindErr, foundUser) => {
+    if (dbFindErr) return res.sendStatus(500);
+    if (foundUser) {
       res.status = 409;
       res.write('Username already exists');
       return res.end();
     }
-  });
 
-  // encrypt password
-  bcrypt.hash(req.body.password, SALT_ROUNDS, (err, hash) => {
-    if (err) throw new Error(err);
+    // encrypt password
+    bcrypt.hash(req.body.password, 10, (err, hash) => {
+      if (err) throw new Error(err);
 
-    // create user and store in db
-    User.create({
-      name: req.body.name,
-      username: req.body.username,
-      email: req.body.email,
-      password: hash,
-    }, (dbErr, user) => {
-      if (dbErr) return res.sendStatus(500);
-      res.status = 200;
-      res.write(user);
-      return res.end();
+      // create user and store in db
+      User.create({
+        name: req.body.name,
+        username: req.body.username,
+        email: req.body.email,
+        password: hash,
+      }, (dbErr, user) => {
+        if (dbErr) return res.sendStatus(500);
+        res.status = 200;
+        res.json(user);
+        return res.end();
+      });
     });
   });
 };
 
 UserController.verify = (req, res) => {
-  User.find({ username: req.body.username }, (dbErr, user) => {
+  User.findOne({ username: req.body.username }, (dbErr, user) => {
     if (dbErr) return res.sendStatus(500);
-    bcrypt.compare(req.body.password, user.password, (err, result) => {
-      if (!user || !result) {
+    // make password check even if user specified does not exist to increase security
+    const passw = user ? user.password : 'temp';
+    bcrypt.compare(req.body.password, passw, (err, result) => {
+      if (!result) {
         res.status(401);
         res.write('Username or password is incorrect');
         return res.end();
       }
       res.status = 200;
-      res.write(user);
-      return res.end();
+      return res.json(user);
     });
   });
 };
