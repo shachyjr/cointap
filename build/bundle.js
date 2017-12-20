@@ -27111,10 +27111,6 @@ var Cell = function (_Component) {
   return Cell;
 }(_react.Component);
 
-Cell.propTypes = {
-  currencyType: _propTypes2.default.string.isRequired
-};
-
 exports.default = Cell;
 
 /***/ }),

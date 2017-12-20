@@ -56,8 +56,5 @@ class Cell extends Component {
   }
 }
 
-Cell.propTypes = {
-  currencyType: PropTypes.string.isRequired,
-};
 
 export default Cell;

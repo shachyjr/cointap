@@ -16,7 +16,7 @@ UserController.add = (req, res) => {
     }
 
     // encrypt password
-    bcrypt.hash(req.body.password, 10, (err, hash) => {
+    bcrypt.hash(req.body.password, SALT_ROUNDS, (err, hash) => {
       if (err) throw new Error(err);
 
       // create user and store in db
