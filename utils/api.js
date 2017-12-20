@@ -35,6 +35,8 @@ const currentData = {
   XMR: {},
   DASH: {},
   NXT: {},
+  ZEC: {},
+  DGB: {},
 };
 
 /* extract will modify the data recieved from the socket and extract/format the data desired and assign it to the currentData object */
@@ -57,7 +59,7 @@ const extract = (data) => {
 
 /* function subscribes to event on external socket, cleans up data, and envoke the specified callback */
 const subToCurrentAgg = (callback) => {
-  const subscribe = ['5~CCCAGG~BTC~USD', '5~CCCAGG~ETH~USD', '5~CCCAGG~LTC~USD', '5~CCCAGG~XMR~USD', '5~CCCAGG~DASH~USD', '5~CCCAGG~NXT~USD'];
+  const subscribe = ['5~CCCAGG~BTC~USD', '5~CCCAGG~ETH~USD', '5~CCCAGG~LTC~USD', '5~CCCAGG~XMR~USD', '5~CCCAGG~DASH~USD', '5~CCCAGG~NXT~USD', '5~CCCAGG~ZEC~USD', '5~CCCAGG~DGB~USD'];
 
   socket.emit('SubAdd', { subs: subscribe });
 

@@ -54,29 +54,6 @@ class Cell extends Component {
       <i key="flag" className={`fa fa-${flagState} ${flagState}`}></i>,
     ];
   }
-  // render() {
-  //   // sets class for appropriate styling for increase or decrease
-  //   const data = this.props.currUpdates;
-  //   console.log(this.props.currUpdates);
-  //   let flagState;
-  //   switch (data.flags) {
-  //     case '1':
-  //       flagState = 'caret-up';
-  //       break;
-  //     case '2':
-  //       flagState = 'caret-down';
-  //       break;
-  //   }
-
-  //   return [
-  //     <h4 key="currency-name">{data.name}</h4>,
-  //     <div>{data.currencyType}</div>,
-  //     <div key="price">{data.price}</div>,
-  //     <div key="change-24">{data.change24Hour}</div>,
-  //     <div key="change-24-PCT">{data.change24HourPCT}</div>,
-  //     <i key="flag" className={`fa fa-${flagState} ${flagState}`}></i>,
-  //   ];
-  // }
 }
 
 Cell.propTypes = {
