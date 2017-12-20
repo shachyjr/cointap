@@ -28,40 +28,46 @@ const socket = io('https://streamer.cryptocompare.com');
 
 */
 
-const currentData = {};
+const currentData = {
+  BTC: {},
+  ETH: {},
+};
 
 /* extract will modify the data recieved from the socket and extract/format the data desired and assign it to the currentData object */
 const extract = (data) => {
   // deconstruct and check existance because values that remain consistent will not be updates and will fall through as undefined
-  const { PRICE, OPEN24HOUR, FLAGS } = data;
-  if (PRICE) currentData.PRICE = PRICE;
-  if (OPEN24HOUR) currentData.OPEN24HOUR = OPEN24HOUR;
-  if (FLAGS) currentData.FLAGS = FLAGS;
+  const { PRICE, OPEN24HOUR, FLAGS, FROMSYMBOL } = data;
+  if (PRICE) currentData[FROMSYMBOL].PRICE = PRICE;
+  if (OPEN24HOUR) currentData[FROMSYMBOL].OPEN24HOUR = OPEN24HOUR;
+  if (FLAGS) currentData[FROMSYMBOL].FLAGS = FLAGS;
+  if (FROMSYMBOL) currentData[FROMSYMBOL].FROMSYMBOL = FROMSYMBOL;
 
   // TODO: Account for multiple cells of multiple currencies
 
   const from = data.FROMSYMBOL;
   const to = data.TOSYMBOL;
-  const fsym = CCC.STATIC.CURRENCY.getSymbol(from);
-  const tsym = CCC.STATIC.CURRENCY.getSymbol(to);
-  const pair = from + to;
-  currentData.CHANGE24HOUR = `${tsym} ${(currentData.PRICE - currentData.OPEN24HOUR).toFixed(2)}`;
-  currentData.CHANGE24HOURPCT = `${(((currentData.PRICE - currentData.OPEN24HOUR) / currentData.OPEN24HOUR) * 100).toFixed(2)} %`;
+  // const fsym = CCC.STATIC.CURRENCY.getSymbol(from);
+  // const tsym = CCC.STATIC.CURRENCY.getSymbol(to);
+  // const pair = from + to;
+  currentData[FROMSYMBOL].CHANGE24HOUR = `${(currentData[FROMSYMBOL].PRICE - currentData[FROMSYMBOL].OPEN24HOUR).toFixed(2)}`;
+  currentData[FROMSYMBOL].CHANGE24HOURPCT = `${(((currentData[FROMSYMBOL].PRICE - currentData[FROMSYMBOL].OPEN24HOUR) / currentData[FROMSYMBOL].OPEN24HOUR) * 100).toFixed(2)}`;
 };
 
 const subToTrade = () => {};
 
 const subToCurrent = () => {};
 
-const subToCurrentAgg = (currency, callback) => {
-  const subscribe = [`5~CCCAGG~${currency}~USD`];
+const subToCurrentAgg = (callback) => {
+  const subscribe = ['5~CCCAGG~BTC~USD', '5~CCCAGG~ETH~USD'];
 
   socket.emit('SubAdd', { subs: subscribe });
 
   socket.on('m', (message) => {
+    // console.log(currentData);
     const messageType = message.slice(0, message.indexOf('~'));
     if (messageType === CCC.STATIC.TYPE.CURRENTAGG) {
       const data = CCC.CURRENT.unpack(message);
+      // console.log(data);
       extract(data);
       callback(null, currentData);
     }
