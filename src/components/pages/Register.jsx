@@ -6,7 +6,7 @@ const Register = ({ handleRegister, nameChange, userNameChange, emailChange, pas
     <input type="text" onChange={userNameChange} placeholder="username"></input>
     <input type="text" onChange={emailChange} placeholder="email"></input>
     <input type="password" onChange={passwordChange} placeholder="password"></input>
-    <input type="submit" value="Login"></input>
+    <input type="submit" value="Register"></input>
   </form>
 )
 

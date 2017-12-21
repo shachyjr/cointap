@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #2a2d37;
+  color: white;
+  font-size: 16px;
+  /* font-family: 'Merriweather', serif; */
+  font-family: 'Cardo', serif;
+}
+
+h2 {
+  /* font-family: 'Lato', sans-serif; */
+  font-family: 'Montserrat', sans-serif;
+}
+

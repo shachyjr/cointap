@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router';
-import NavBar from './NavBar';
-import Dashboard from './pages/Dashboard.jsx';
+import NavBar from './NavBar/index.jsx';
+import Dashboard from './pages/Dashboard/index.jsx';
 import Track from './pages/Track.jsx';
 import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
+
+import './global-style.css';
 
 class App extends Component {
   constructor() {
@@ -35,10 +37,34 @@ class App extends Component {
   handleLogin(event) {
     event.preventDefault();
     console.log(this.state);
+    fetch('/api/login', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(this.state),
+    }).then((resp) => {
+      if (resp.status === 401) {
+        // incorrect username or password
+
+      }
+
+      console.log(resp)
+    }).then((data) => {
+      if (data.s)
+      console.log(data)
+    });
   }
   handleRegister(event) {
     event.preventDefault();
     console.log(this.state);
+    fetch('/api/register', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(this.state),
+    }).then((resp) => {
+      resp.json()
+    }).then((data) => {
+      console.log(data)
+    });
   }
 
   render() {

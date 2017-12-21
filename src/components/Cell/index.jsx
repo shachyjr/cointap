@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import subToCurrentAgg from '../../../utils/api';
-import './cell-style.css';
+import './style.css';
 
 class Cell extends Component {
   constructor(props) {
@@ -46,15 +46,20 @@ class Cell extends Component {
         break;
     }
 
-    return [
-      <h4 key="currency-name">{this.state.name}</h4>,
-      <div key="price">{this.state.price}</div>,
-      <div key="change-24">{this.state.change24Hour}</div>,
-      <div key="change-24-PCT">{`${this.state.change24HourPCT} %`}</div>,
-      <i key="flag" className={`fa fa-${flagState} ${flagState}`}></i>,
-    ];
+    return (
+      <div className="cell-block">
+        <h2 key="currency-name">Name: {this.state.name}</h2>
+        <div className="emphasize"key="price">{this.state.price}</div>
+        <i key="flag" className={`fa fa-${flagState} ${flagState}`}></i>
+        <div key="change-24">{this.state.change24Hour}</div>
+        <div key="change-24-PCT">{`${this.state.change24HourPCT} %`}</div>
+      </div>
+    );
   }
 }
 
+Cell.propTypes = {
+  currencyType: PropTypes.string.isRequired,
+};
 
 export default Cell;

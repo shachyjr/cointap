@@ -1,0 +1,26 @@
+#navbar-container {
+  display: block;
+  background-color: #363e49;
+  overflow: hidden;
+  width: 100%;
+}
+
+#navbar {
+  float: right;
+}
+
+.nav-link {
+  display: inline-block;
+  /* float: right; */
+
+  padding: 10px;
+  margin: 0 10px;
+
+  text-decoration: none;
+  color: white;
+}
+
+.nav-link:hover {
+  background-color: #078e9069;
+  border: solid #078d90 1px;
+}

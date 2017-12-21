@@ -1,0 +1,27 @@
+.caret-up {
+  color: green;
+}
+.caret-down {
+  color: red;
+}
+.hide {
+  visibility: hidden;
+}
+
+.cell-block {
+  display: block;
+  width: 200px;
+  /* #c801ff #363e49 */
+  border: solid #363e49 2px;
+  background-color: #2d353d;
+  border-radius: 5px;
+  margin: 20px;
+  text-align: center;
+}
+
+.emphasize {
+  /* color: #760092; */
+  color: #9f00c8;
+  font-size: 30px;
+  font-weight: 700;
+}
