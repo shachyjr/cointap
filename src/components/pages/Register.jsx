@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 
 class Register extends Component {
   constructor() {
@@ -57,16 +58,17 @@ class Register extends Component {
     return (
       <div className="shift module-page">
         <form className="module" onSubmit={this.handleRegister}>
-          <input type="text" onChange={this.nameChange} placeholder="Name"></input>
-          <input type="text" onChange={this.usernameChange} placeholder="username"></input>
-          <input type="text" onChange={this.emailChange} placeholder="email"></input>
-          <input type="password" onChange={this.passwordChange} placeholder="password"></input>
-          <input type="submit" value="Register"></input>
-          <button onClick={()=>{this.props.redirect('/login')}}>Login</button>
+          <input className="text-input" type="text" onChange={this.nameChange} placeholder="Name"></input>
+          <input className="text-input" type="text" onChange={this.usernameChange} placeholder="Username"></input>
+          <input className="text-input" type="text" onChange={this.emailChange} placeholder="Email"></input>
+          <input className="text-input" type="password" onChange={this.passwordChange} placeholder="Password"></input>
+          <input className="submit-btn" type="submit" value="Register"></input>
+          <NavLink key="login-redir" to="/login">{'Have an account? Login!'}</NavLink>
         </form>
       </div>
     );
   }
 }
+// <button onClick={()=>{this.props.redirect('/login')}}>Login</button>
 
 export default Register;

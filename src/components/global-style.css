@@ -40,4 +40,20 @@ body {
   
   width: 300px;
   height: 300px; 
+  padding: 25px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.text-input {
+  margin-bottom: 10px;
+  height: 30px;
+  line-height: 24;
+}
+
+.submit-btn {
+  margin-bottom: 10px;
+  width: 100px;
 }

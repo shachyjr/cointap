@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 
 class Login extends Component {
   constructor(props) {
@@ -45,14 +46,14 @@ class Login extends Component {
     return (
       <div className="shift module-page">
         <form key="login-form" className="module" onSubmit={this.handleLogin}>
-          <input type="text" onChange={this.usernameChange} placeholder="username"></input>
-          <input type="password" onChange={this.passwordChange} placeholder="password"></input>
-          <input type="submit" value="Login"></input>
-          <button onClick={()=>{this.props.redirect('/register')}}>Register</button>
+          <input className="text-input" type="text" onChange={this.usernameChange} placeholder="Username"></input>
+          <input className="text-input" type="password" onChange={this.passwordChange} placeholder="Password"></input>
+          <input className="submit-btn" type="submit" value="Login"></input>
+          <NavLink key="register-redir" to="/register">{'Don\'t have an account? Register!'}</NavLink>
         </form>
       </div>
     );
   }
 }
-
+// <button onClick={()=>{this.props.redirect('/register')}}>Register</button>
 export default Login;

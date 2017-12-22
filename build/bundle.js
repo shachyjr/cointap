@@ -31495,6 +31495,8 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactRouterDom = __webpack_require__(39);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -31561,23 +31563,19 @@ var Login = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
-
       return _react2.default.createElement(
         'div',
         { className: 'shift module-page' },
         _react2.default.createElement(
           'form',
           { key: 'login-form', className: 'module', onSubmit: this.handleLogin },
-          _react2.default.createElement('input', { type: 'text', onChange: this.usernameChange, placeholder: 'username' }),
-          _react2.default.createElement('input', { type: 'password', onChange: this.passwordChange, placeholder: 'password' }),
-          _react2.default.createElement('input', { type: 'submit', value: 'Login' }),
+          _react2.default.createElement('input', { className: 'text-input', type: 'text', onChange: this.usernameChange, placeholder: 'Username' }),
+          _react2.default.createElement('input', { className: 'text-input', type: 'password', onChange: this.passwordChange, placeholder: 'Password' }),
+          _react2.default.createElement('input', { className: 'submit-btn', type: 'submit', value: 'Login' }),
           _react2.default.createElement(
-            'button',
-            { onClick: function onClick() {
-                _this3.props.redirect('/register');
-              } },
-            'Register'
+            _reactRouterDom.NavLink,
+            { key: 'register-redir', to: '/register' },
+            'Don\'t have an account? Register!'
           )
         )
       );
@@ -31586,6 +31584,8 @@ var Login = function (_Component) {
 
   return Login;
 }(_react.Component);
+// <button onClick={()=>{this.props.redirect('/register')}}>Register</button>
+
 
 exports.default = Login;
 
@@ -31605,6 +31605,8 @@ var _createClass = function () { function defineProperties(target, props) { for 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _reactRouterDom = __webpack_require__(39);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31687,25 +31689,21 @@ var Register = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this3 = this;
-
       return _react2.default.createElement(
         'div',
         { className: 'shift module-page' },
         _react2.default.createElement(
           'form',
           { className: 'module', onSubmit: this.handleRegister },
-          _react2.default.createElement('input', { type: 'text', onChange: this.nameChange, placeholder: 'Name' }),
-          _react2.default.createElement('input', { type: 'text', onChange: this.usernameChange, placeholder: 'username' }),
-          _react2.default.createElement('input', { type: 'text', onChange: this.emailChange, placeholder: 'email' }),
-          _react2.default.createElement('input', { type: 'password', onChange: this.passwordChange, placeholder: 'password' }),
-          _react2.default.createElement('input', { type: 'submit', value: 'Register' }),
+          _react2.default.createElement('input', { className: 'text-input', type: 'text', onChange: this.nameChange, placeholder: 'Name' }),
+          _react2.default.createElement('input', { className: 'text-input', type: 'text', onChange: this.usernameChange, placeholder: 'Username' }),
+          _react2.default.createElement('input', { className: 'text-input', type: 'text', onChange: this.emailChange, placeholder: 'Email' }),
+          _react2.default.createElement('input', { className: 'text-input', type: 'password', onChange: this.passwordChange, placeholder: 'Password' }),
+          _react2.default.createElement('input', { className: 'submit-btn', type: 'submit', value: 'Register' }),
           _react2.default.createElement(
-            'button',
-            { onClick: function onClick() {
-                _this3.props.redirect('/login');
-              } },
-            'Login'
+            _reactRouterDom.NavLink,
+            { key: 'login-redir', to: '/login' },
+            'Have an account? Login!'
           )
         )
       );
@@ -31714,6 +31712,7 @@ var Register = function (_Component) {
 
   return Register;
 }(_react.Component);
+// <button onClick={()=>{this.props.redirect('/login')}}>Login</button>
 
 exports.default = Register;
 
@@ -31757,7 +31756,7 @@ exports = module.exports = __webpack_require__(19)(undefined);
 
 
 // module
-exports.push([module.i, "* {\n  margin: 0;\n  padding: 0;\n}\n\nbody {\n  height: 100%;\n\n  background-color: #2a2d37;\n  color: white;\n  font-size: 16px;\n  /* font-family: 'Merriweather', serif; */\n  font-family: 'Cardo', serif;\n}\n\n.heading {\n  /* font-family: 'Lato', sans-serif; */\n  font-family: 'Montserrat', sans-serif;\n}\n\n.shift {\n  position: absolute;\n  left: 55px;\n  height: 100%;\n  width: 100%;\n}\n\n.module-page {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n\n.module {\n  align-self: center;\n\n  border: solid white 2px;\n  border-radius: 5px;\n  background-color: #7b8286;\n  \n  width: 300px;\n  height: 300px; \n}\n", ""]);
+exports.push([module.i, "* {\n  margin: 0;\n  padding: 0;\n}\n\nbody {\n  height: 100%;\n\n  background-color: #2a2d37;\n  color: white;\n  font-size: 16px;\n  /* font-family: 'Merriweather', serif; */\n  font-family: 'Cardo', serif;\n}\n\n.heading {\n  /* font-family: 'Lato', sans-serif; */\n  font-family: 'Montserrat', sans-serif;\n}\n\n.shift {\n  position: absolute;\n  left: 55px;\n  height: 100%;\n  width: 100%;\n}\n\n.module-page {\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n\n.module {\n  align-self: center;\n\n  border: solid white 2px;\n  border-radius: 5px;\n  background-color: #7b8286;\n  \n  width: 300px;\n  height: 300px; \n  padding: 25px;\n\n  display: flex;\n  flex-direction: column;\n  justify-content: center;\n}\n\n.text-input {\n  margin-bottom: 10px;\n  height: 30px;\n  line-height: 24;\n}\n\n.submit-btn {\n  margin-bottom: 10px;\n  width: 100px;\n}", ""]);
 
 // exports
 
