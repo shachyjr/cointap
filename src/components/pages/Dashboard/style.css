@@ -1,3 +1,5 @@
 #dashboard {
-  clear: both; 
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
 }

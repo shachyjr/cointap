@@ -11,7 +11,7 @@ UserController.add = (req, res) => {
     if (dbFindErr) return res.sendStatus(500);
     if (foundUser) {
       res.status = 409;
-      res.write('Username already exists');
+      res.write(JSON.stringify({ error: 'Username already exists' }));
       return res.end();
     }
 
@@ -43,7 +43,7 @@ UserController.verify = (req, res) => {
     bcrypt.compare(req.body.password, passw, (err, result) => {
       if (!result) {
         res.status(401);
-        res.write('Username or password is incorrect');
+        res.write(JSON.stringify({ error: 'Username or password is incorrect' }));
         return res.end();
       }
       res.status = 200;

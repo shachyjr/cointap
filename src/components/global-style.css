@@ -1,6 +1,11 @@
-body {
+* {
   margin: 0;
   padding: 0;
+}
+
+body {
+  height: 100%;
+
   background-color: #2a2d37;
   color: white;
   font-size: 16px;
@@ -8,8 +13,31 @@ body {
   font-family: 'Cardo', serif;
 }
 
-h2 {
+.heading {
   /* font-family: 'Lato', sans-serif; */
   font-family: 'Montserrat', sans-serif;
 }
 
+.shift {
+  position: absolute;
+  left: 55px;
+  height: 100%;
+  width: 100%;
+}
+
+.module-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.module {
+  align-self: center;
+
+  border: solid white 2px;
+  border-radius: 5px;
+  background-color: #7b8286;
+  
+  width: 300px;
+  height: 300px; 
+}

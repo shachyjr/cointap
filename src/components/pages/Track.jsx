@@ -2,9 +2,11 @@ import React, { Component } from 'react';
 
 class Track extends Component {
   render() {
-    return [
-      <h1 key="track-heading">THIS IS THE TRACKING PAGE</h1>,
-    ];
+    return (
+      <div className="shift">
+        <h1 key="track-heading" className="heading">Hello {this.props.user.name}, <br/> Your Tracked Items Would Reside Here!</h1>
+      </div>
+    );
   }
 }
 

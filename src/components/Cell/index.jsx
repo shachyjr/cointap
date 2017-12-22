@@ -48,7 +48,7 @@ class Cell extends Component {
 
     return (
       <div className="cell-block">
-        <h2 key="currency-name">Name: {this.state.name}</h2>
+        <h2 className="heading" key="currency-name">{this.state.name}</h2>
         <div className="emphasize"key="price">{this.state.price}</div>
         <i key="flag" className={`fa fa-${flagState} ${flagState}`}></i>
         <div key="change-24">{this.state.change24Hour}</div>
