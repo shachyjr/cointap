@@ -1,20 +1,12 @@
 #navbar-container {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
-
-  // position: sticky;
-  // top: 0;
-  // z-index: 100;
-
-  width: 12%;
-  height: 100%;
-  padding: 15px;
+  // display: flex;
+  // justify-content: space-between;
+  // flex-direction: column;
 
   .nav-link {
     display: inline-block;
     width: 100%;
-    padding: 30px 0;
+    padding: 20px 0;
   
     text-decoration: none;
     text-align: center;
@@ -25,12 +17,11 @@
       background-color: $blue_chill_ts;
       border: solid $blue_chill 1px;
       border-radius: 2px;
-      color: white;
+      color: $hvr_clr;
     }
     &:focus {
       border-left: solid $toned_dwn_yellow 4px;
-      // background-color: $secondary_grey;
-      color: white;
+      color: $hvr_clr;
     }
 
     i {
@@ -40,9 +31,13 @@
   }
 
   #user {
-    background-color: #0b0c0e;
+    background-color: $darkest_grey;
+    padding-top: 15px;
+    padding-bottom: 15px;
+
+    &:hover {
+      color: $hvr_clr;
+      border: none;
+    }
   }
 }
-
-
-

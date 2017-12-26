@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 class Track extends Component {
   render() {
     return (
-      <div>
-        <h1 key="track-heading" className="heading">Hello {this.props.user.name}, <br/> Your Tracked Items Would Reside Here!</h1>
+      <div id="tracking">
+        <h1 key="track-heading">Hello {this.props.user.name}, <br/> Your Tracked Items Would Reside Here!</h1>
       </div>
     );
   }

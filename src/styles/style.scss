@@ -1,6 +1,6 @@
 @import 'variables';
 @import 'mixins';
-@import 'header';
+@import 'navbar';
 @import 'dashboard';
 @import 'tracking';
 @import 'login';
@@ -30,10 +30,11 @@ body {
   }
 
   #container {
-    display: flex;
-    justify-content: flex-start;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 6fr;
+    grid-template-rows: 100%;
+    grid-gap: 35px;
 
-    padding: 30px;
+    margin: 35px;
   }
 }

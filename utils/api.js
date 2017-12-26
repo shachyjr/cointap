@@ -1,5 +1,6 @@
 import io from 'socket.io-client';
 import CCC from './ccc-streamer';
+
 const socket = io('https://streamer.cryptocompare.com');
 
 /* DATA structure

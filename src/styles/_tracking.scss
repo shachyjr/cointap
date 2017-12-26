@@ -1,3 +1,7 @@
 /* * * * * * * * * * 
   TRACKING PAGE STYLING
 * * * * * * * * * */
+
+#tracking {
+  @include stretch;
+}
