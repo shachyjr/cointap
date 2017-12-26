@@ -1,0 +1,48 @@
+#navbar-container {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+
+  // position: sticky;
+  // top: 0;
+  // z-index: 100;
+
+  width: 12%;
+  height: 100%;
+  padding: 15px;
+
+  .nav-link {
+    display: inline-block;
+    width: 100%;
+    padding: 30px 0;
+  
+    text-decoration: none;
+    text-align: center;
+    color: $dflt_ft_clr;
+    font-size: $dflt_ft_sz;
+
+    &:hover {
+      background-color: $blue_chill_ts;
+      border: solid $blue_chill 1px;
+      border-radius: 2px;
+      color: white;
+    }
+    &:focus {
+      border-left: solid $toned_dwn_yellow 4px;
+      // background-color: $secondary_grey;
+      color: white;
+    }
+
+    i {
+      font-size: 30px;
+      margin-bottom: 5px;
+    }
+  }
+
+  #user {
+    background-color: #0b0c0e;
+  }
+}
+
+
+

@@ -7,7 +7,8 @@ const UserController = {};
 
 UserController.add = (req, res) => {
   // check if user name already exists
-  User.findOne({ username: req.body.username }, (dbFindErr, foundUser) => {
+  const username = req.body.username.toLowercase();
+  User.findOne({ username }, (dbFindErr, foundUser) => {
     if (dbFindErr) return res.sendStatus(500);
     if (foundUser) {
       res.status = 409;
@@ -22,7 +23,7 @@ UserController.add = (req, res) => {
       // create user and store in db
       User.create({
         name: req.body.name,
-        username: req.body.username,
+        username,
         email: req.body.email,
         password: hash,
       }, (dbErr, user) => {
@@ -36,7 +37,7 @@ UserController.add = (req, res) => {
 };
 
 UserController.verify = (req, res) => {
-  User.findOne({ username: req.body.username }, (dbErr, user) => {
+  User.findOne({ username: req.body.username.toLowercase() }, (dbErr, user) => {
     if (dbErr) return res.sendStatus(500);
     // make password check even if user specified does not exist to increase security
     const passw = user ? user.password : 'temp';

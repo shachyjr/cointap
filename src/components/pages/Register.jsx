@@ -56,7 +56,7 @@ class Register extends Component {
 
   render() {
     return (
-      <div className="shift module-page">
+      <div className="module-page">
         <form className="module" onSubmit={this.handleRegister}>
           <input className="text-input" type="text" onChange={this.nameChange} placeholder="Name"></input>
           <input className="text-input" type="text" onChange={this.usernameChange} placeholder="Username"></input>

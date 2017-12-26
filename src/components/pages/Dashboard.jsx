@@ -1,9 +1,8 @@
 import React from 'react';
-import Cell from '../../Cell/index.jsx';
-import './style.css';
+import Cell from '../Cell.jsx';
 
 const Dashboard = () => (
-  <div id="dashboard" className="shift">
+  <div id="dashboard">
     <Cell currencyType="BTC"/>
     <Cell currencyType="ETH"/>
     <Cell currencyType="LTC"/>

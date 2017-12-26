@@ -1,0 +1,50 @@
+/* * * * * * * * * * 
+  DASHBOARD PAGE STYLING
+* * * * * * * * * */
+
+#dashboard {
+  @include stretch;
+
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  height: 100%;
+
+  padding: 0 4%;
+
+  .cell-block {
+    @include block;
+    width: 45%;
+
+    padding: 10px;
+    margin: 10px 0;
+    text-align: center;
+
+    &:hover {
+      background-color: $blue_chill_ts;
+      border: solid $blue_chill 1px;
+      border-radius: 2px;
+      color: white;
+    }
+
+    .emphasize {
+      /* color: #760092; */
+      /* color: #9f00c8; */
+      // color: #ff814e;
+      color: #d6f950;
+      // color: $blue_chill;
+      font-size: 56px;
+      font-weight: 700;
+    }
+
+  }
+}
+.caret-up {
+  color: green;
+}
+.caret-down {
+  color: red;
+}
+.hide {
+  visibility: hidden;
+}

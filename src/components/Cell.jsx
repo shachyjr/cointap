@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import subToCurrentAgg from '../../../utils/api';
-import './style.css';
+import subToCurrentAgg from '../../utils/api';
 
 class Cell extends Component {
   constructor(props) {
@@ -48,7 +47,7 @@ class Cell extends Component {
 
     return (
       <div className="cell-block">
-        <h2 className="heading" key="currency-name">{this.state.name}</h2>
+        <h2 key="currency-name">{this.state.name}</h2>
         <div className="emphasize"key="price">{this.state.price}</div>
         <i key="flag" className={`fa fa-${flagState} ${flagState}`}></i>
         <div key="change-24">{this.state.change24Hour}</div>

@@ -44,7 +44,7 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="shift module-page">
+      <div className="module-page">
         <form key="login-form" className="module" onSubmit={this.handleLogin}>
           <input className="text-input" type="text" onChange={this.usernameChange} placeholder="Username"></input>
           <input className="text-input" type="password" onChange={this.passwordChange} placeholder="Password"></input>
