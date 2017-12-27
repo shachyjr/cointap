@@ -18,14 +18,12 @@ body {
   @include stretch;
   background-color: $primary_grey;
 
-  /* font-family: 'Merriweather', serif; */
   font-family: $body_ft_fm;
   color: $dflt_ft_clr;
   font-size: $dflt_ft_sz;
 
   /* set header font for header tags */
   h1, h2, h3, h4, h5, h6 {
-    /* font-family: 'Lato', sans-serif; */
     font-family: $heading_ft_fm;
   }
 

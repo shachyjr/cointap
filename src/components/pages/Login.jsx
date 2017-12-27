@@ -44,14 +44,33 @@ class Login extends Component {
 
   render() {
     return (
-      <div className="module-page">
-        <form key="login-form" className="module" onSubmit={this.handleLogin}>
-          <input className="text-input" type="text" onChange={this.usernameChange} placeholder="Username"></input>
-          <input className="text-input" type="password" onChange={this.passwordChange} placeholder="Password"></input>
-          <input className="submit-btn" type="submit" value="Login"></input>
-          <NavLink key="register-redir" to="/register">{'Don\'t have an account? Register!'}</NavLink>
-        </form>
-      </div>
+      <center>
+        <div className="auth-form">
+          <h4 id="header">LOG IN</h4>
+          <form key="login-form" onSubmit={this.handleLogin}>
+            <center>
+              <div className="text-input">
+                <input type="text" onChange={this.usernameChange} placeholder="Username"></input>
+                <i className="fa fa-user-o"></i>
+              </div>
+            </center>
+            <center>
+              <div className="text-input">
+                <input type="password" onChange={this.passwordChange} placeholder="Password"></input>
+                <i className="fa fa-lock"></i>
+              </div>
+            </center>
+            <center>
+              <input className="submit-btn" type="submit" value="Login"></input>
+            </center>
+            <center>
+              <NavLink key="register-redir" to="/register">Click here to create an account</NavLink>
+              <p>or</p>
+              <NavLink key="fg-pw-redir" to="/forgotpw">Password</NavLink>
+            </center>
+          </form>
+        </div>
+      </center>
     );
   }
 }
