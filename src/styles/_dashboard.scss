@@ -29,10 +29,12 @@
   }
 }
 .caret-up {
-  color: green;
+  font-size: 42px;
+  color: $crt_inc;
 }
 .caret-down {
-  color: red;
+  font-size: 42px;
+  color: $crt_dec;
 }
 .hide {
   visibility: hidden;

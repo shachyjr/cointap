@@ -63,6 +63,7 @@ class Register extends Component {
             <center>
               <div className="text-input">
                 <input type="text" onChange={this.nameChange} placeholder="Name"></input>
+                <i className="fa fa-id-card-o"></i>
               </div>
             </center>
             <center>

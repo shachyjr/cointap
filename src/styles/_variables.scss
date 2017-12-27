@@ -1,6 +1,8 @@
 $dflt_ft_clr: #69939d;
 $dflt_ft_sz: 16px;
 $hvr_clr: white;
+$bright_blue: #26798c;
+$bright_green: #50bd1d;
 
 
 /* FONT FAMILY */
@@ -17,6 +19,6 @@ $blue_chill_ts: rgba(7, 142, 144, 0.1);
 $blue_chill: #0ac0c4;
 $emp_orange: #ff814e;
 
-$crt_inc: green;
-$crt_dec: red;
+$crt_inc: $bright_green;
+$crt_dec: rgb(255, 54, 54);
 
