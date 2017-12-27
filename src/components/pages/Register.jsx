@@ -56,19 +56,44 @@ class Register extends Component {
 
   render() {
     return (
-      <div className="auth-form">
-        <form onSubmit={this.handleRegister}>
-          <input className="text-input" type="text" onChange={this.nameChange} placeholder="Name"></input>
-          <input className="text-input" type="text" onChange={this.usernameChange} placeholder="Username"></input>
-          <input className="text-input" type="text" onChange={this.emailChange} placeholder="Email"></input>
-          <input className="text-input" type="password" onChange={this.passwordChange} placeholder="Password"></input>
-          <input className="submit-btn" type="submit" value="Register"></input>
-          <NavLink key="login-redir" to="/login">{'Have an account? Login!'}</NavLink>
-        </form>
-      </div>
+      <center>
+        <div className="auth-form-container">
+          <h4 className="header">REGISTER</h4>
+          <form className="form-register" onSubmit={this.handleRegister}>
+            <center>
+              <div className="text-input">
+                <input type="text" onChange={this.nameChange} placeholder="Name"></input>
+              </div>
+            </center>
+            <center>
+              <div className="text-input">
+                <input type="text" onChange={this.usernameChange} placeholder="Username"></input>
+                <i className="fa fa-user-o"></i>
+              </div>
+            </center>
+            <center>
+              <div className="text-input">
+                <input type="text" onChange={this.emailChange} placeholder="Email"></input>
+                <i className="fa fa-envelope-o"></i>
+              </div>
+            </center>
+            <center>
+              <div className="text-input">
+                <input type="password" onChange={this.passwordChange} placeholder="Password"></input>
+                <i className="fa fa-lock"></i>
+              </div>
+            </center>
+            <center>
+              <input className="submit-btn" type="submit" value="submit"></input>
+            </center>
+            <div className="redir">
+              <NavLink key="login-redir" to="/login">Have an account? Login</NavLink>
+            </div>
+          </form>
+        </div>
+      </center>
     );
   }
 }
-// <button onClick={()=>{this.props.redirect('/login')}}>Login</button>
 
 export default Register;

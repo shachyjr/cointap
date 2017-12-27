@@ -11,5 +11,20 @@
   border: solid $dflt_ft_clr 1px;
   border-radius: 5px;
   background-color: $secondary_grey;
-  box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);
+  box-shadow: 5px 5px 15px 1px rgba(0, 0, 0, 0.5);
+}
+
+@mixin form($type) {
+  padding: 35px;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 35px;
+
+  @if $type == 'login'{
+    grid-template-rows: repeat(4, $text_inp_line_height);
+  }
+  @if $type == 'register' {
+    grid-template-rows: repeat(6, $text_inp_line_height);
+  } 
 }

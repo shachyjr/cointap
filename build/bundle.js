@@ -30898,22 +30898,22 @@ var Login = function (_Component) {
         null,
         _react2.default.createElement(
           'div',
-          { className: 'auth-form' },
+          { className: 'auth-form-container' },
           _react2.default.createElement(
             'h4',
-            { id: 'header' },
+            { className: 'header' },
             'LOG IN'
           ),
           _react2.default.createElement(
             'form',
-            { key: 'login-form', onSubmit: this.handleLogin },
+            { className: 'form-login', onSubmit: this.handleLogin },
             _react2.default.createElement(
               'center',
               null,
               _react2.default.createElement(
                 'div',
                 { className: 'text-input' },
-                _react2.default.createElement('input', { type: 'text', onChange: this.usernameChange, placeholder: 'Username' }),
+                _react2.default.createElement('input', { type: 'text', onChange: this.usernameChange, placeholder: 'Username or email' }),
                 _react2.default.createElement('i', { className: 'fa fa-user-o' })
               )
             ),
@@ -30930,25 +30930,20 @@ var Login = function (_Component) {
             _react2.default.createElement(
               'center',
               null,
-              _react2.default.createElement('input', { className: 'submit-btn', type: 'submit', value: 'Login' })
+              _react2.default.createElement('input', { className: 'submit-btn', type: 'submit', value: 'submit' })
             ),
             _react2.default.createElement(
-              'center',
-              null,
+              'div',
+              { className: 'redir' },
               _react2.default.createElement(
                 _reactRouterDom.NavLink,
                 { key: 'register-redir', to: '/register' },
-                'Click here to create an account'
-              ),
-              _react2.default.createElement(
-                'p',
-                null,
-                'or'
+                'Register'
               ),
               _react2.default.createElement(
                 _reactRouterDom.NavLink,
                 { key: 'fg-pw-redir', to: '/forgotpw' },
-                'Password'
+                'Forgot Password?'
               )
             )
           )
@@ -30959,8 +30954,6 @@ var Login = function (_Component) {
 
   return Login;
 }(_react.Component);
-// <button onClick={()=>{this.props.redirect('/register')}}>Register</button>
-
 
 exports.default = Login;
 
@@ -31065,20 +31058,72 @@ var Register = function (_Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        'div',
-        { className: 'auth-form' },
+        'center',
+        null,
         _react2.default.createElement(
-          'form',
-          { onSubmit: this.handleRegister },
-          _react2.default.createElement('input', { className: 'text-input', type: 'text', onChange: this.nameChange, placeholder: 'Name' }),
-          _react2.default.createElement('input', { className: 'text-input', type: 'text', onChange: this.usernameChange, placeholder: 'Username' }),
-          _react2.default.createElement('input', { className: 'text-input', type: 'text', onChange: this.emailChange, placeholder: 'Email' }),
-          _react2.default.createElement('input', { className: 'text-input', type: 'password', onChange: this.passwordChange, placeholder: 'Password' }),
-          _react2.default.createElement('input', { className: 'submit-btn', type: 'submit', value: 'Register' }),
+          'div',
+          { className: 'auth-form-container' },
           _react2.default.createElement(
-            _reactRouterDom.NavLink,
-            { key: 'login-redir', to: '/login' },
-            'Have an account? Login!'
+            'h4',
+            { className: 'header' },
+            'REGISTER'
+          ),
+          _react2.default.createElement(
+            'form',
+            { className: 'form-register', onSubmit: this.handleRegister },
+            _react2.default.createElement(
+              'center',
+              null,
+              _react2.default.createElement(
+                'div',
+                { className: 'text-input' },
+                _react2.default.createElement('input', { type: 'text', onChange: this.nameChange, placeholder: 'Name' })
+              )
+            ),
+            _react2.default.createElement(
+              'center',
+              null,
+              _react2.default.createElement(
+                'div',
+                { className: 'text-input' },
+                _react2.default.createElement('input', { type: 'text', onChange: this.usernameChange, placeholder: 'Username' }),
+                _react2.default.createElement('i', { className: 'fa fa-user-o' })
+              )
+            ),
+            _react2.default.createElement(
+              'center',
+              null,
+              _react2.default.createElement(
+                'div',
+                { className: 'text-input' },
+                _react2.default.createElement('input', { type: 'text', onChange: this.emailChange, placeholder: 'Email' }),
+                _react2.default.createElement('i', { className: 'fa fa-envelope-o' })
+              )
+            ),
+            _react2.default.createElement(
+              'center',
+              null,
+              _react2.default.createElement(
+                'div',
+                { className: 'text-input' },
+                _react2.default.createElement('input', { type: 'password', onChange: this.passwordChange, placeholder: 'Password' }),
+                _react2.default.createElement('i', { className: 'fa fa-lock' })
+              )
+            ),
+            _react2.default.createElement(
+              'center',
+              null,
+              _react2.default.createElement('input', { className: 'submit-btn', type: 'submit', value: 'submit' })
+            ),
+            _react2.default.createElement(
+              'div',
+              { className: 'redir' },
+              _react2.default.createElement(
+                _reactRouterDom.NavLink,
+                { key: 'login-redir', to: '/login' },
+                'Have an account? Login'
+              )
+            )
           )
         )
       );
@@ -31087,7 +31132,6 @@ var Register = function (_Component) {
 
   return Register;
 }(_react.Component);
-// <button onClick={()=>{this.props.redirect('/login')}}>Login</button>
 
 exports.default = Register;
 
@@ -31173,7 +31217,7 @@ var transform;
 var options = {"hmr":true}
 options.transform = transform
 // add the styles to the DOM
-var update = __webpack_require__(133)(content, options);
+var update = __webpack_require__(132)(content, options);
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -31193,100 +31237,18 @@ if(false) {
 /* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
-exports = module.exports = __webpack_require__(132)(undefined);
+exports = module.exports = __webpack_require__(134)(undefined);
 // imports
 
 
 // module
-exports.push([module.i, "/* FONT FAMILY */\n/* 'Merriweather', serif; */\n/* 'Lato', sans-serif; */\n/* COLORS */\n/* * * * * * * * * * \n  MIXINS\n* * * * * * * * * */\n#navbar-container .nav-link {\n  display: inline-block;\n  width: 100%;\n  padding: 20px 5px;\n  text-decoration: none;\n  text-align: center;\n  color: #69939d;\n  font-size: 16px; }\n  #navbar-container .nav-link:hover {\n    background-color: rgba(7, 142, 144, 0.1);\n    border: solid #0ac0c4 1px;\n    border-radius: 2px;\n    color: white; }\n  #navbar-container .nav-link:focus {\n    border-left: solid #d6f950 4px;\n    color: white; }\n  #navbar-container .nav-link i {\n    font-size: 30px;\n    margin-bottom: 10px; }\n\n#navbar-container #user {\n  background-color: #0b0c0e;\n  padding-top: 15px;\n  padding-bottom: 15px; }\n  #navbar-container #user:hover {\n    color: white;\n    border: none; }\n\n/* * * * * * * * * * \n  DASHBOARD PAGE STYLING\n* * * * * * * * * */\n#dashboard {\n  display: grid;\n  grid-template-columns: repeat(2, 1fr);\n  grid-gap: 20px; }\n  #dashboard .cell-block {\n    border: solid #69939d 1px;\n    border-radius: 5px;\n    background-color: #292c33;\n    box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);\n    padding: 10px;\n    text-align: center; }\n    #dashboard .cell-block:hover {\n      background-color: rgba(7, 142, 144, 0.1);\n      border: solid #0ac0c4 1px;\n      border-radius: 5px;\n      color: white; }\n    #dashboard .cell-block .emphasize {\n      /* color: #760092; */\n      /* color: #9f00c8; */\n      color: #d6f950;\n      font-size: 56px;\n      font-weight: 700; }\n\n.caret-up {\n  color: green; }\n\n.caret-down {\n  color: red; }\n\n.hide {\n  visibility: hidden; }\n\n/* * * * * * * * * * \n  TRACKING PAGE STYLING\n* * * * * * * * * */\n/* * * * * * * * * * \n  LOGIN PAGE STYLING\n* * * * * * * * * */\n.auth-form {\n  border: solid #69939d 1px;\n  border-radius: 5px;\n  background-color: #292c33;\n  box-shadow: 5px 5px 5px 1px rgba(0, 0, 0, 0.5);\n  width: 400px;\n  height: 350px;\n  /* Remove predefined styles for input */ }\n  .auth-form #header {\n    background-color: #69939d;\n    color: white;\n    font-weight: bold;\n    font-size: 24px;\n    text-shadow: 2px 2px black;\n    line-height: 55px;\n    height: 55px;\n    margin-bottom: 10%; }\n  .auth-form input {\n    background: none;\n    border: none; }\n    .auth-form input:focus {\n      outline: none; }\n  .auth-form .text-input {\n    display: flex;\n    justify-content: space-between;\n    margin: 35px;\n    padding: 0 15px;\n    border-radius: 5px;\n    border: solid white 2px;\n    background-color: white;\n    box-shadow: 2px 2px 10px 1px rgba(0, 0, 0, 0.3); }\n    .auth-form .text-input input {\n      width: 100%;\n      font-family: \"Cardo\", serif;\n      font-size: 18px;\n      color: #1a1b20;\n      line-height: 40px; }\n    .auth-form .text-input i {\n      font-size: 18px;\n      line-height: 40px; }\n\n/* * * * * * * * * * \n  GENERAL STYLING FOR ENTIRE APPLICATION\n* * * * * * * * * */\n* {\n  margin: 0;\n  padding: 0; }\n\nbody {\n  height: 100%;\n  width: 100%;\n  background-color: #1a1b20;\n  font-family: \"Cardo\", serif;\n  color: #69939d;\n  font-size: 16px;\n  /* set header font for header tags */ }\n  body h1, body h2, body h3, body h4, body h5, body h6 {\n    font-family: \"Montserrat\", sans-serif; }\n  body #container {\n    display: grid;\n    grid-template-columns: 1fr 6fr;\n    grid-template-rows: 100%;\n    grid-gap: 35px;\n    margin: 35px; }\n", ""]);
+exports.push([module.i, "/* FONT FAMILY */\n/* COLORS */\n/* * * * * * * * * * \n  MIXINS\n* * * * * * * * * */\n#navbar-container .nav-link {\n  display: inline-block;\n  width: 100%;\n  padding: 20px 5px;\n  text-decoration: none;\n  text-align: center;\n  color: #69939d;\n  font-size: 16px; }\n  #navbar-container .nav-link:hover {\n    background-color: rgba(7, 142, 144, 0.1);\n    border: solid #0ac0c4 1px;\n    border-radius: 2px;\n    color: white; }\n  #navbar-container .nav-link:focus {\n    border-left: solid #d6f950 4px;\n    color: white; }\n  #navbar-container .nav-link i {\n    font-size: 30px;\n    margin-bottom: 10px; }\n\n#navbar-container #user {\n  background-color: #0b0c0e;\n  padding-top: 15px;\n  padding-bottom: 15px; }\n  #navbar-container #user:hover {\n    color: white;\n    border: none; }\n\n/* * * * * * * * * * \n  DASHBOARD PAGE STYLING\n* * * * * * * * * */\n#dashboard {\n  display: grid;\n  grid-template-columns: repeat(2, 1fr);\n  grid-gap: 20px; }\n  #dashboard .cell-block {\n    border: solid #69939d 1px;\n    border-radius: 5px;\n    background-color: #292c33;\n    box-shadow: 5px 5px 15px 1px rgba(0, 0, 0, 0.5);\n    padding: 10px;\n    text-align: center; }\n    #dashboard .cell-block:hover {\n      background-color: rgba(7, 142, 144, 0.1);\n      border: solid #0ac0c4 1px;\n      border-radius: 5px;\n      color: white; }\n    #dashboard .cell-block .emphasize {\n      /* color: #760092; */\n      /* color: #9f00c8; */\n      color: #d6f950;\n      font-size: 48px; }\n\n.caret-up {\n  color: green; }\n\n.caret-down {\n  color: red; }\n\n.hide {\n  visibility: hidden; }\n\n/* * * * * * * * * * \n  LOGIN PAGE STYLING\n* * * * * * * * * */\n.auth-form-container {\n  border: solid #69939d 1px;\n  border-radius: 5px;\n  background-color: #292c33;\n  box-shadow: 5px 5px 15px 1px rgba(0, 0, 0, 0.5);\n  width: 410px;\n  display: grid;\n  grid-template-columns: 1fr;\n  grid-template-rows: 55px minmax(200px, auto);\n  /* Remove predefined styles for input */ }\n  .auth-form-container .header {\n    border: solid #69939d 2px;\n    background-color: #d6f950;\n    color: #292c33;\n    font-size: 24px;\n    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);\n    letter-spacing: 3px;\n    line-height: 55px; }\n  .auth-form-container input {\n    background: none;\n    border: none; }\n    .auth-form-container input:focus {\n      outline: none; }\n  .auth-form-container .form-login {\n    padding: 35px;\n    display: grid;\n    grid-template-columns: 1fr;\n    grid-gap: 35px;\n    grid-template-rows: repeat(4, 40px); }\n  .auth-form-container .form-register {\n    padding: 35px;\n    display: grid;\n    grid-template-columns: 1fr;\n    grid-gap: 35px;\n    grid-template-rows: repeat(6, 40px); }\n  .auth-form-container .text-input {\n    display: flex;\n    justify-content: space-between;\n    padding: 0 15px;\n    border-radius: 5px;\n    border: solid white 1px;\n    background-color: white;\n    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5) inset; }\n    .auth-form-container .text-input input {\n      width: 100%;\n      margin-right: 10px;\n      font-family: \"Open Sans\", sans-serif;\n      font-size: 16px;\n      color: #1a1b20;\n      line-height: 40px; }\n    .auth-form-container .text-input i {\n      font-size: 16px;\n      line-height: 40px; }\n  .auth-form-container .submit-btn {\n    cursor: pointer;\n    width: 50%;\n    line-height: 40px;\n    font-size: 16px;\n    border-radius: 5px;\n    border-bottom: 2px solid #3e565c;\n    box-shadow: inset 0 -2px #3e565c;\n    background-color: #69939d;\n    color: white;\n    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);\n    letter-spacing: 3px; }\n  .auth-form-container .redir {\n    display: flex;\n    justify-content: space-between; }\n    .auth-form-container .redir a {\n      text-decoration: none;\n      color: #d6f950;\n      font-style: italic; }\n\n/* * * * * * * * * * \n  TRACKING PAGE STYLING\n* * * * * * * * * */\n/* * * * * * * * * * \n  GENERAL STYLING FOR ENTIRE APPLICATION\n* * * * * * * * * */\n* {\n  margin: 0;\n  padding: 0; }\n\nbody {\n  height: 100%;\n  width: 100%;\n  background-color: #1a1b20;\n  font-family: \"Open Sans\", sans-serif;\n  color: #69939d;\n  font-size: 16px;\n  /* set header font for header tags */ }\n  body h1, body h2, body h3, body h4, body h5, body h6 {\n    font-family: \"Montserrat\", sans-serif; }\n  body #container {\n    display: grid;\n    grid-template-columns: 1fr 6fr;\n    grid-template-rows: 100%;\n    grid-gap: 35px;\n    margin: 35px; }\n", ""]);
 
 // exports
 
 
 /***/ }),
 /* 132 */
-/***/ (function(module, exports) {
-
-/*
-	MIT License http://www.opensource.org/licenses/mit-license.php
-	Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-module.exports = function(useSourceMap) {
-	var list = [];
-
-	// return the list of modules as css string
-	list.toString = function toString() {
-		return this.map(function (item) {
-			var content = cssWithMappingToString(item, useSourceMap);
-			if(item[2]) {
-				return "@media " + item[2] + "{" + content + "}";
-			} else {
-				return content;
-			}
-		}).join("");
-	};
-
-	// import a list of modules into the list
-	list.i = function(modules, mediaQuery) {
-		if(typeof modules === "string")
-			modules = [[null, modules, ""]];
-		var alreadyImportedModules = {};
-		for(var i = 0; i < this.length; i++) {
-			var id = this[i][0];
-			if(typeof id === "number")
-				alreadyImportedModules[id] = true;
-		}
-		for(i = 0; i < modules.length; i++) {
-			var item = modules[i];
-			// skip already imported module
-			// this implementation is not 100% perfect for weird media query combinations
-			//  when a module is imported multiple times with different media queries.
-			//  I hope this will never occur (Hey this way we have smaller bundles)
-			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
-				if(mediaQuery && !item[2]) {
-					item[2] = mediaQuery;
-				} else if(mediaQuery) {
-					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
-				}
-				list.push(item);
-			}
-		}
-	};
-	return list;
-};
-
-function cssWithMappingToString(item, useSourceMap) {
-	var content = item[1] || '';
-	var cssMapping = item[3];
-	if (!cssMapping) {
-		return content;
-	}
-
-	if (useSourceMap && typeof btoa === 'function') {
-		var sourceMapping = toComment(cssMapping);
-		var sourceURLs = cssMapping.sources.map(function (source) {
-			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
-		});
-
-		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
-	}
-
-	return [content].join('\n');
-}
-
-// Adapted from convert-source-map (MIT)
-function toComment(sourceMap) {
-	// eslint-disable-next-line no-undef
-	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
-	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
-
-	return '/*# ' + data + ' */';
-}
-
-
-/***/ }),
-/* 133 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -31342,7 +31304,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(134);
+var	fixUrls = __webpack_require__(133);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -31658,7 +31620,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 134 */
+/* 133 */
 /***/ (function(module, exports) {
 
 
@@ -31750,6 +31712,88 @@ module.exports = function (css) {
 	// send back the fixed css
 	return fixedCss;
 };
+
+
+/***/ }),
+/* 134 */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
 
 
 /***/ })

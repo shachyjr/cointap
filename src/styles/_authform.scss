@@ -1,0 +1,97 @@
+/* * * * * * * * * * 
+  LOGIN PAGE STYLING
+* * * * * * * * * */
+
+$text_inp_ft_sz: 16px;
+$text_inp_line_height: 40px;
+
+.auth-form-container {
+  @include block;
+  width: 410px;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 55px minmax(200px, auto);
+
+  .header {
+    border: solid $dflt_ft_clr 2px;
+    background-color: $toned_dwn_yellow;
+
+    color: $secondary_grey;
+    font-size: 24px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+
+    letter-spacing: 3px;
+    line-height: 55px;
+  }
+
+  /* Remove predefined styles for input */
+  input {
+    background: none;
+    border: none;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .form-login {
+    @include form('login');
+  }
+  .form-register {
+    @include form('register');
+  }
+
+  .text-input {
+    display: flex;
+    justify-content: space-between;
+    
+    padding: 0 15px;
+
+    border-radius: 5px;
+    border: solid $hvr_clr 1px;
+    background-color: $hvr_clr;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5) inset;
+
+    input {
+      width: 100%;
+      margin-right: 10px;
+
+      font-family: $body_ft_fm;
+      font-size: $text_inp_ft_sz;
+      color: $primary_grey;
+      line-height: $text_inp_line_height;
+    }
+
+    i {
+      font-size: $text_inp_ft_sz;
+      line-height: $text_inp_line_height;
+    }
+  }
+
+  .submit-btn {
+    cursor: pointer;
+    width: 50%;
+
+    line-height: $text_inp_line_height;
+    font-size: $text_inp_ft_sz;
+
+    border-radius: 5px;
+    border-bottom: 2px solid #3e565c;
+    box-shadow: inset 0 -2px #3e565c;
+
+    background-color: #69939d;
+    color: $hvr_clr;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+    letter-spacing: 3px;
+  }
+  
+  .redir {
+    display: flex;
+    justify-content: space-between;
+    a {
+      text-decoration: none;
+      color: $toned_dwn_yellow;
+      font-style: italic;
+    }
+  }
+}

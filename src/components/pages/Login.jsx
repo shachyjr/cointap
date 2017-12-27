@@ -45,12 +45,12 @@ class Login extends Component {
   render() {
     return (
       <center>
-        <div className="auth-form">
-          <h4 id="header">LOG IN</h4>
-          <form key="login-form" onSubmit={this.handleLogin}>
+        <div className="auth-form-container">
+          <h4 className="header">LOG IN</h4>
+          <form className="form-login" onSubmit={this.handleLogin}>
             <center>
               <div className="text-input">
-                <input type="text" onChange={this.usernameChange} placeholder="Username"></input>
+                <input type="text" onChange={this.usernameChange} placeholder="Username or email"></input>
                 <i className="fa fa-user-o"></i>
               </div>
             </center>
@@ -61,18 +61,17 @@ class Login extends Component {
               </div>
             </center>
             <center>
-              <input className="submit-btn" type="submit" value="Login"></input>
+              <input className="submit-btn" type="submit" value="submit"></input>
             </center>
-            <center>
-              <NavLink key="register-redir" to="/register">Click here to create an account</NavLink>
-              <p>or</p>
-              <NavLink key="fg-pw-redir" to="/forgotpw">Password</NavLink>
-            </center>
+            <div className="redir">
+              <NavLink key="register-redir" to="/register">Register</NavLink>
+              <NavLink key="fg-pw-redir" to="/forgotpw">Forgot Password?</NavLink>
+            </div>
           </form>
         </div>
       </center>
     );
   }
 }
-// <button onClick={()=>{this.props.redirect('/register')}}>Register</button>
+
 export default Login;
