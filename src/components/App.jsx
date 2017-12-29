@@ -8,7 +8,6 @@ import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import NotFound from './pages/NotFound.jsx';
 import PrivateRoute from './PrivateRoute.jsx';
-import Modal from './Modal.jsx';
 
 import '../styles/style.scss';
 
@@ -67,7 +66,6 @@ class App extends Component {
           <Route path='/login' render={() => <Login authorize={this.authorize} redirect={this.redirect} />} />,
           <Route path='/register' render={() => <Register authorize={this.authorize} redirect={this.redirect} />} />,
           <PrivateRoute path="/track" component={Track} user={this.state.user} />,
-          <Route path='/modal' render={() => <Modal authorize={this.authorize} redirect={this.redirect} />} />
           <Route path="/*" render={() => <NotFound />} />
         </Switch>
       </div> 

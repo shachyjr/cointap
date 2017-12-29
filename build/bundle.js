@@ -26658,10 +26658,6 @@ var _PrivateRoute = __webpack_require__(129);
 
 var _PrivateRoute2 = _interopRequireDefault(_PrivateRoute);
 
-var _Modal = __webpack_require__(332);
-
-var _Modal2 = _interopRequireDefault(_Modal);
-
 __webpack_require__(130);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -26755,9 +26751,6 @@ var App = function (_Component) {
           ',',
           _react2.default.createElement(_PrivateRoute2.default, { path: '/track', component: _Track2.default, user: this.state.user }),
           ',',
-          _react2.default.createElement(_reactRouter.Route, { path: '/modal', render: function render() {
-              return _react2.default.createElement(_Modal2.default, { authorize: _this3.authorize, redirect: _this3.redirect });
-            } }),
           _react2.default.createElement(_reactRouter.Route, { path: '/*', render: function render() {
               return _react2.default.createElement(_NotFound2.default, null);
             } })
@@ -32677,13 +32670,6 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
     return targetComponent;
 };
 
-
-/***/ }),
-/* 331 */,
-/* 332 */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed: SyntaxError: Unexpected token (33:37)\n\n\u001b[0m \u001b[90m 31 | \u001b[39m\n \u001b[90m 32 | \u001b[39m    \u001b[36mreturn\u001b[39m (\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 33 | \u001b[39m      \u001b[33m<\u001b[39m\u001b[33mdiv\u001b[39m className\u001b[33m=\u001b[39m\u001b[32m\"backdrop\"\u001b[39m style\u001b[33m=>\u001b[39m\n \u001b[90m    | \u001b[39m                                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 34 | \u001b[39m        \u001b[33m<\u001b[39m\u001b[33mdiv\u001b[39m className\u001b[33m=\u001b[39m\u001b[32m\"modal\"\u001b[39m style\u001b[33m=>\u001b[39m\n \u001b[90m 35 | \u001b[39m          {\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mprops\u001b[33m.\u001b[39mchildren}\n \u001b[90m 36 | \u001b[39m\u001b[0m\n");
 
 /***/ })
 /******/ ]);
