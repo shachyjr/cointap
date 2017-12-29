@@ -62,25 +62,25 @@ class Register extends Component {
           <form className="form-register" onSubmit={this.handleRegister}>
             <center>
               <div className="text-input">
-                <input type="text" onChange={this.nameChange} placeholder="Name"></input>
+                <input type="text" autoComplete="name" onChange={this.nameChange} placeholder="Name"></input>
                 <i className="fa fa-id-card-o"></i>
               </div>
             </center>
             <center>
               <div className="text-input">
-                <input type="text" onChange={this.usernameChange} placeholder="Username"></input>
+                <input type="text" autoComplete="username" onChange={this.usernameChange} placeholder="Username"></input>
                 <i className="fa fa-user-o"></i>
               </div>
             </center>
             <center>
               <div className="text-input">
-                <input type="text" onChange={this.emailChange} placeholder="Email"></input>
+                <input type="email" autoComplete="email" onChange={this.emailChange} placeholder="Email"></input>
                 <i className="fa fa-envelope-o"></i>
               </div>
             </center>
             <center>
               <div className="text-input">
-                <input type="password" onChange={this.passwordChange} placeholder="Password"></input>
+                <input type="password" autoComplete="new-password" onChange={this.passwordChange} placeholder="Password"></input>
                 <i className="fa fa-lock"></i>
               </div>
             </center>

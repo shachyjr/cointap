@@ -50,13 +50,13 @@ class Login extends Component {
           <form className="form-login" onSubmit={this.handleLogin}>
             <center>
               <div className="text-input">
-                <input type="text" onChange={this.usernameChange} placeholder="Username or email"></input>
+                <input type="text" autoComplete="username" onChange={this.usernameChange} placeholder="Username or email"></input>
                 <i className="fa fa-user-o"></i>
               </div>
             </center>
             <center>
               <div className="text-input">
-                <input type="password" onChange={this.passwordChange} placeholder="Password"></input>
+                <input type="password" autoComplete="current-password" onChange={this.passwordChange} placeholder="Password"></input>
                 <i className="fa fa-lock"></i>
               </div>
             </center>

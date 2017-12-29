@@ -5,7 +5,7 @@ const { SALT_ROUNDS } = require('../utils/env.js');
 
 const UserController = {};
 
-UserController.add = (req, res) => {
+UserController.add = (req, res, next) => {
   // check if user name already exists
   const username = req.body.username.toLowerCase();
   User.findOne({ username }, (dbFindErr, foundUser) => {
@@ -28,17 +28,17 @@ UserController.add = (req, res) => {
         password: hash,
       }, (dbErr, user) => {
         if (dbErr) return res.sendStatus(500);
-        res.status = 200;
-        res.json(user);
-        return res.end();
+        res.locals.user = user;
+        next();
       });
     });
   });
 };
 
-UserController.verify = (req, res) => {
+UserController.verify = (req, res, next) => {
   User.findOne({ username: req.body.username.toLowerCase() }, (dbErr, user) => {
     if (dbErr) return res.sendStatus(500);
+    // TODO: if !user
     // make password check even if user specified does not exist to increase security
     const passw = user ? user.password : 'temp';
     bcrypt.compare(req.body.password, passw, (err, result) => {
@@ -47,8 +47,8 @@ UserController.verify = (req, res) => {
         res.write(JSON.stringify({ error: 'Username or password is incorrect' }));
         return res.end();
       }
-      res.status = 200;
-      return res.json(user);
+      res.locals.user = user;
+      next();
     });
   });
 };

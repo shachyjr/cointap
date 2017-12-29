@@ -6244,6 +6244,8 @@ var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _reactRouterDom = __webpack_require__(12);
 
+var _reactCookie = __webpack_require__(323);
+
 var _App = __webpack_require__(95);
 
 var _App2 = _interopRequireDefault(_App);
@@ -6251,9 +6253,13 @@ var _App2 = _interopRequireDefault(_App);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _reactDom2.default.render(_react2.default.createElement(
-  _reactRouterDom.BrowserRouter,
+  _reactCookie.CookiesProvider,
   null,
-  _react2.default.createElement(_App2.default, null)
+  _react2.default.createElement(
+    _reactRouterDom.BrowserRouter,
+    null,
+    _react2.default.createElement(_App2.default, null)
+  )
 ), document.getElementById('app'));
 
 /***/ }),
@@ -26622,6 +26628,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouter = __webpack_require__(96);
 
+var _reactCookie = __webpack_require__(323);
+
 var _NavBar = __webpack_require__(97);
 
 var _NavBar2 = _interopRequireDefault(_NavBar);
@@ -26650,6 +26658,10 @@ var _PrivateRoute = __webpack_require__(129);
 
 var _PrivateRoute2 = _interopRequireDefault(_PrivateRoute);
 
+var _Modal = __webpack_require__(332);
+
+var _Modal2 = _interopRequireDefault(_Modal);
+
 __webpack_require__(130);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -26676,6 +26688,36 @@ var App = function (_Component) {
   }
 
   _createClass(App, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      var _this2 = this;
+
+      console.log('Mounting App');
+      var xhttp = new XMLHttpRequest();
+      xhttp.open('GET', '/api/getUser', true);
+      xhttp.onreadystatechange = function () {
+        if (xhttp.readyState === 4) {
+          console.log(xhttp.status);
+          switch (xhttp.status) {
+            case 200:
+              // authenticated
+              _this2.authorize(JSON.parse(xhttp.responseText));
+              break;
+            case 401:
+              // username already exists
+              break;
+            case 500:
+              // username already exists
+              break;
+            default:
+            // error message
+          }
+        }
+      };
+      xhttp.setRequestHeader('Content-Type', 'application/json');
+      xhttp.send();
+    }
+  }, {
     key: 'redirect',
     value: function redirect(route) {
       this.props.history.push(route);
@@ -26683,14 +26725,14 @@ var App = function (_Component) {
   }, {
     key: 'authorize',
     value: function authorize(user) {
-      console.log('User authorized: ', user);
       this.setState({ user: user });
+      console.log('state: ', this.state);
       this.props.history.push('/track');
     }
   }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       return _react2.default.createElement(
         'div',
@@ -26704,14 +26746,18 @@ var App = function (_Component) {
             } }),
           ',',
           _react2.default.createElement(_reactRouter.Route, { path: '/login', render: function render() {
-              return _react2.default.createElement(_Login2.default, { authorize: _this2.authorize, redirect: _this2.redirect });
+              return _react2.default.createElement(_Login2.default, { authorize: _this3.authorize, redirect: _this3.redirect });
             } }),
           ',',
           _react2.default.createElement(_reactRouter.Route, { path: '/register', render: function render() {
-              return _react2.default.createElement(_Register2.default, { authorize: _this2.authorize, redirect: _this2.redirect });
+              return _react2.default.createElement(_Register2.default, { authorize: _this3.authorize, redirect: _this3.redirect });
             } }),
           ',',
           _react2.default.createElement(_PrivateRoute2.default, { path: '/track', component: _Track2.default, user: this.state.user }),
+          ',',
+          _react2.default.createElement(_reactRouter.Route, { path: '/modal', render: function render() {
+              return _react2.default.createElement(_Modal2.default, { authorize: _this3.authorize, redirect: _this3.redirect });
+            } }),
           _react2.default.createElement(_reactRouter.Route, { path: '/*', render: function render() {
               return _react2.default.createElement(_NotFound2.default, null);
             } })
@@ -26723,7 +26769,7 @@ var App = function (_Component) {
   return App;
 }(_react.Component);
 
-exports.default = (0, _reactRouter.withRouter)(App);
+exports.default = (0, _reactCookie.withCookies)((0, _reactRouter.withRouter)(App));
 
 /***/ }),
 /* 96 */
@@ -30913,7 +30959,7 @@ var Login = function (_Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'text-input' },
-                _react2.default.createElement('input', { type: 'text', onChange: this.usernameChange, placeholder: 'Username or email' }),
+                _react2.default.createElement('input', { type: 'text', autoComplete: 'username', onChange: this.usernameChange, placeholder: 'Username or email' }),
                 _react2.default.createElement('i', { className: 'fa fa-user-o' })
               )
             ),
@@ -30923,7 +30969,7 @@ var Login = function (_Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'text-input' },
-                _react2.default.createElement('input', { type: 'password', onChange: this.passwordChange, placeholder: 'Password' }),
+                _react2.default.createElement('input', { type: 'password', autoComplete: 'current-password', onChange: this.passwordChange, placeholder: 'Password' }),
                 _react2.default.createElement('i', { className: 'fa fa-lock' })
               )
             ),
@@ -31077,7 +31123,7 @@ var Register = function (_Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'text-input' },
-                _react2.default.createElement('input', { type: 'text', onChange: this.nameChange, placeholder: 'Name' }),
+                _react2.default.createElement('input', { type: 'text', autoComplete: 'name', onChange: this.nameChange, placeholder: 'Name' }),
                 _react2.default.createElement('i', { className: 'fa fa-id-card-o' })
               )
             ),
@@ -31087,7 +31133,7 @@ var Register = function (_Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'text-input' },
-                _react2.default.createElement('input', { type: 'text', onChange: this.usernameChange, placeholder: 'Username' }),
+                _react2.default.createElement('input', { type: 'text', autoComplete: 'username', onChange: this.usernameChange, placeholder: 'Username' }),
                 _react2.default.createElement('i', { className: 'fa fa-user-o' })
               )
             ),
@@ -31097,7 +31143,7 @@ var Register = function (_Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'text-input' },
-                _react2.default.createElement('input', { type: 'text', onChange: this.emailChange, placeholder: 'Email' }),
+                _react2.default.createElement('input', { type: 'email', autoComplete: 'email', onChange: this.emailChange, placeholder: 'Email' }),
                 _react2.default.createElement('i', { className: 'fa fa-envelope-o' })
               )
             ),
@@ -31107,7 +31153,7 @@ var Register = function (_Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'text-input' },
-                _react2.default.createElement('input', { type: 'password', onChange: this.passwordChange, placeholder: 'Password' }),
+                _react2.default.createElement('input', { type: 'password', autoComplete: 'new-password', onChange: this.passwordChange, placeholder: 'Password' }),
                 _react2.default.createElement('i', { className: 'fa fa-lock' })
               )
             ),
@@ -31796,6 +31842,848 @@ function toComment(sourceMap) {
 	return '/*# ' + data + ' */';
 }
 
+
+/***/ }),
+/* 135 */,
+/* 136 */,
+/* 137 */,
+/* 138 */,
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */,
+/* 147 */,
+/* 148 */,
+/* 149 */,
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */,
+/* 164 */,
+/* 165 */,
+/* 166 */,
+/* 167 */,
+/* 168 */,
+/* 169 */,
+/* 170 */,
+/* 171 */,
+/* 172 */,
+/* 173 */,
+/* 174 */,
+/* 175 */,
+/* 176 */,
+/* 177 */,
+/* 178 */,
+/* 179 */,
+/* 180 */,
+/* 181 */,
+/* 182 */,
+/* 183 */,
+/* 184 */,
+/* 185 */,
+/* 186 */,
+/* 187 */,
+/* 188 */,
+/* 189 */,
+/* 190 */,
+/* 191 */,
+/* 192 */,
+/* 193 */,
+/* 194 */,
+/* 195 */,
+/* 196 */,
+/* 197 */,
+/* 198 */,
+/* 199 */,
+/* 200 */,
+/* 201 */,
+/* 202 */,
+/* 203 */,
+/* 204 */,
+/* 205 */,
+/* 206 */,
+/* 207 */,
+/* 208 */,
+/* 209 */,
+/* 210 */,
+/* 211 */,
+/* 212 */,
+/* 213 */,
+/* 214 */,
+/* 215 */,
+/* 216 */,
+/* 217 */,
+/* 218 */,
+/* 219 */,
+/* 220 */,
+/* 221 */,
+/* 222 */,
+/* 223 */,
+/* 224 */,
+/* 225 */,
+/* 226 */,
+/* 227 */,
+/* 228 */,
+/* 229 */,
+/* 230 */,
+/* 231 */,
+/* 232 */,
+/* 233 */,
+/* 234 */,
+/* 235 */,
+/* 236 */,
+/* 237 */,
+/* 238 */,
+/* 239 */,
+/* 240 */,
+/* 241 */,
+/* 242 */,
+/* 243 */,
+/* 244 */,
+/* 245 */,
+/* 246 */,
+/* 247 */,
+/* 248 */,
+/* 249 */,
+/* 250 */,
+/* 251 */,
+/* 252 */,
+/* 253 */,
+/* 254 */,
+/* 255 */,
+/* 256 */,
+/* 257 */,
+/* 258 */,
+/* 259 */,
+/* 260 */,
+/* 261 */,
+/* 262 */,
+/* 263 */,
+/* 264 */,
+/* 265 */,
+/* 266 */,
+/* 267 */,
+/* 268 */,
+/* 269 */,
+/* 270 */,
+/* 271 */,
+/* 272 */,
+/* 273 */,
+/* 274 */,
+/* 275 */,
+/* 276 */,
+/* 277 */,
+/* 278 */,
+/* 279 */,
+/* 280 */,
+/* 281 */,
+/* 282 */,
+/* 283 */,
+/* 284 */,
+/* 285 */,
+/* 286 */,
+/* 287 */,
+/* 288 */,
+/* 289 */,
+/* 290 */,
+/* 291 */,
+/* 292 */,
+/* 293 */,
+/* 294 */,
+/* 295 */,
+/* 296 */,
+/* 297 */,
+/* 298 */,
+/* 299 */,
+/* 300 */,
+/* 301 */,
+/* 302 */,
+/* 303 */,
+/* 304 */,
+/* 305 */,
+/* 306 */,
+/* 307 */,
+/* 308 */,
+/* 309 */,
+/* 310 */,
+/* 311 */,
+/* 312 */,
+/* 313 */,
+/* 314 */,
+/* 315 */,
+/* 316 */,
+/* 317 */,
+/* 318 */,
+/* 319 */,
+/* 320 */,
+/* 321 */,
+/* 322 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _Cookies = __webpack_require__(325);
+
+var _Cookies2 = _interopRequireDefault(_Cookies);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _Cookies2.default;
+module.exports = exports['default'];
+
+/***/ }),
+/* 323 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _Cookies = __webpack_require__(324);
+
+Object.defineProperty(exports, 'Cookies', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_Cookies).default;
+  }
+});
+
+var _CookiesProvider = __webpack_require__(328);
+
+Object.defineProperty(exports, 'CookiesProvider', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_CookiesProvider).default;
+  }
+});
+
+var _withCookies = __webpack_require__(329);
+
+Object.defineProperty(exports, 'withCookies', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_withCookies).default;
+  }
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 324 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _universalCookie = __webpack_require__(322);
+
+var _universalCookie2 = _interopRequireDefault(_universalCookie);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _universalCookie2.default;
+module.exports = exports['default'];
+
+/***/ }),
+/* 325 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _cookie = __webpack_require__(326);
+
+var _cookie2 = _interopRequireDefault(_cookie);
+
+var _objectAssign = __webpack_require__(10);
+
+var _objectAssign2 = _interopRequireDefault(_objectAssign);
+
+var _utils = __webpack_require__(327);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Cookies = function () {
+  function Cookies(cookies, hooks) {
+    _classCallCheck(this, Cookies);
+
+    this.cookies = parseCookies(cookies);
+    this.hooks = hooks;
+    this.HAS_DOCUMENT_COOKIE = (0, _utils.hasDocumentCookie)();
+  }
+
+  _createClass(Cookies, [{
+    key: '_updateBrowserValues',
+    value: function _updateBrowserValues() {
+      if (!this.HAS_DOCUMENT_COOKIE) {
+        return;
+      }
+
+      this.cookies = _cookie2.default.parse(document.cookie);
+    }
+  }, {
+    key: 'get',
+    value: function get(name) {
+      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+      this._updateBrowserValues();
+      return readCookie(this.cookies[name], options);
+    }
+  }, {
+    key: 'getAll',
+    value: function getAll() {
+      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+      this._updateBrowserValues();
+      var result = {};
+
+      for (var name in this.cookies) {
+        result[name] = readCookie(this.cookies[name], options);
+      }
+
+      return result;
+    }
+  }, {
+    key: 'set',
+    value: function set(name, value, options) {
+      if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object') {
+        value = JSON.stringify(value);
+      }
+
+      if (this.hooks && this.hooks.onSet) {
+        this.hooks.onSet(name, value, options);
+      }
+
+      this.cookies[name] = value;
+
+      if (this.HAS_DOCUMENT_COOKIE) {
+        document.cookie = _cookie2.default.serialize(name, value, options);
+      }
+    }
+  }, {
+    key: 'remove',
+    value: function remove(name, options) {
+      var finalOptions = options = (0, _objectAssign2.default)({}, options, {
+        expires: new Date(1970, 1, 1, 0, 0, 1),
+        maxAge: 0
+      });
+
+      if (this.hooks && this.hooks.onRemove) {
+        this.hooks.onRemove(name, finalOptions);
+      }
+
+      delete this.cookies[name];
+
+      if (this.HAS_DOCUMENT_COOKIE) {
+        document.cookie = _cookie2.default.serialize(name, '', finalOptions);
+      }
+    }
+  }]);
+
+  return Cookies;
+}();
+
+exports.default = Cookies;
+
+
+function parseCookies(cookies) {
+  if (typeof cookies === 'string') {
+    return _cookie2.default.parse(cookies);
+  } else if ((typeof cookies === 'undefined' ? 'undefined' : _typeof(cookies)) === 'object' && cookies !== null) {
+    return cookies;
+  } else {
+    return {};
+  }
+}
+
+function isParsingCookie(value, doNotParse) {
+  if (typeof doNotParse === 'undefined') {
+    // We guess if the cookie start with { or [, it has been serialized
+    doNotParse = !value || value[0] !== '{' && value[0] !== '[' && value[0] !== '"';
+  }
+
+  return !doNotParse;
+}
+
+function readCookie(value) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+  if (isParsingCookie(value, options.doNotParse)) {
+    try {
+      return JSON.parse(value);
+    } catch (e) {
+      // At least we tried
+    }
+  }
+
+  return value;
+}
+module.exports = exports['default'];
+
+/***/ }),
+/* 326 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/*!
+ * cookie
+ * Copyright(c) 2012-2014 Roman Shtylman
+ * Copyright(c) 2015 Douglas Christopher Wilson
+ * MIT Licensed
+ */
+
+
+
+/**
+ * Module exports.
+ * @public
+ */
+
+exports.parse = parse;
+exports.serialize = serialize;
+
+/**
+ * Module variables.
+ * @private
+ */
+
+var decode = decodeURIComponent;
+var encode = encodeURIComponent;
+var pairSplitRegExp = /; */;
+
+/**
+ * RegExp to match field-content in RFC 7230 sec 3.2
+ *
+ * field-content = field-vchar [ 1*( SP / HTAB ) field-vchar ]
+ * field-vchar   = VCHAR / obs-text
+ * obs-text      = %x80-FF
+ */
+
+var fieldContentRegExp = /^[\u0009\u0020-\u007e\u0080-\u00ff]+$/;
+
+/**
+ * Parse a cookie header.
+ *
+ * Parse the given cookie header string into an object
+ * The object has the various cookies as keys(names) => values
+ *
+ * @param {string} str
+ * @param {object} [options]
+ * @return {object}
+ * @public
+ */
+
+function parse(str, options) {
+  if (typeof str !== 'string') {
+    throw new TypeError('argument str must be a string');
+  }
+
+  var obj = {}
+  var opt = options || {};
+  var pairs = str.split(pairSplitRegExp);
+  var dec = opt.decode || decode;
+
+  for (var i = 0; i < pairs.length; i++) {
+    var pair = pairs[i];
+    var eq_idx = pair.indexOf('=');
+
+    // skip things that don't look like key=value
+    if (eq_idx < 0) {
+      continue;
+    }
+
+    var key = pair.substr(0, eq_idx).trim()
+    var val = pair.substr(++eq_idx, pair.length).trim();
+
+    // quoted values
+    if ('"' == val[0]) {
+      val = val.slice(1, -1);
+    }
+
+    // only assign once
+    if (undefined == obj[key]) {
+      obj[key] = tryDecode(val, dec);
+    }
+  }
+
+  return obj;
+}
+
+/**
+ * Serialize data into a cookie header.
+ *
+ * Serialize the a name value pair into a cookie string suitable for
+ * http headers. An optional options object specified cookie parameters.
+ *
+ * serialize('foo', 'bar', { httpOnly: true })
+ *   => "foo=bar; httpOnly"
+ *
+ * @param {string} name
+ * @param {string} val
+ * @param {object} [options]
+ * @return {string}
+ * @public
+ */
+
+function serialize(name, val, options) {
+  var opt = options || {};
+  var enc = opt.encode || encode;
+
+  if (typeof enc !== 'function') {
+    throw new TypeError('option encode is invalid');
+  }
+
+  if (!fieldContentRegExp.test(name)) {
+    throw new TypeError('argument name is invalid');
+  }
+
+  var value = enc(val);
+
+  if (value && !fieldContentRegExp.test(value)) {
+    throw new TypeError('argument val is invalid');
+  }
+
+  var str = name + '=' + value;
+
+  if (null != opt.maxAge) {
+    var maxAge = opt.maxAge - 0;
+    if (isNaN(maxAge)) throw new Error('maxAge should be a Number');
+    str += '; Max-Age=' + Math.floor(maxAge);
+  }
+
+  if (opt.domain) {
+    if (!fieldContentRegExp.test(opt.domain)) {
+      throw new TypeError('option domain is invalid');
+    }
+
+    str += '; Domain=' + opt.domain;
+  }
+
+  if (opt.path) {
+    if (!fieldContentRegExp.test(opt.path)) {
+      throw new TypeError('option path is invalid');
+    }
+
+    str += '; Path=' + opt.path;
+  }
+
+  if (opt.expires) {
+    if (typeof opt.expires.toUTCString !== 'function') {
+      throw new TypeError('option expires is invalid');
+    }
+
+    str += '; Expires=' + opt.expires.toUTCString();
+  }
+
+  if (opt.httpOnly) {
+    str += '; HttpOnly';
+  }
+
+  if (opt.secure) {
+    str += '; Secure';
+  }
+
+  if (opt.sameSite) {
+    var sameSite = typeof opt.sameSite === 'string'
+      ? opt.sameSite.toLowerCase() : opt.sameSite;
+
+    switch (sameSite) {
+      case true:
+        str += '; SameSite=Strict';
+        break;
+      case 'lax':
+        str += '; SameSite=Lax';
+        break;
+      case 'strict':
+        str += '; SameSite=Strict';
+        break;
+      default:
+        throw new TypeError('option sameSite is invalid');
+    }
+  }
+
+  return str;
+}
+
+/**
+ * Try decoding a string using a decoding function.
+ *
+ * @param {string} str
+ * @param {function} decode
+ * @private
+ */
+
+function tryDecode(str, decode) {
+  try {
+    return decode(str);
+  } catch (e) {
+    return str;
+  }
+}
+
+
+/***/ }),
+/* 327 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+exports.hasDocumentCookie = hasDocumentCookie;
+exports.cleanCookies = cleanCookies;
+// Can we get/set cookies on document.cookie?
+
+function hasDocumentCookie() {
+  return (typeof document === 'undefined' ? 'undefined' : _typeof(document)) === 'object' && typeof document.cookie === 'string';
+}
+
+//backwards compatibility
+var HAS_DOCUMENT_COOKIE = exports.HAS_DOCUMENT_COOKIE = hasDocumentCookie();
+
+function cleanCookies() {
+  document.cookie.split(';').forEach(function (c) {
+    document.cookie = c.replace(/^ +/, '').replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/');
+  });
+}
+
+/***/ }),
+/* 328 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _propTypes = __webpack_require__(3);
+
+var _universalCookie = __webpack_require__(322);
+
+var _universalCookie2 = _interopRequireDefault(_universalCookie);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var CookiesProvider = function (_Component) {
+  _inherits(CookiesProvider, _Component);
+
+  function CookiesProvider(props) {
+    _classCallCheck(this, CookiesProvider);
+
+    var _this = _possibleConstructorReturn(this, (CookiesProvider.__proto__ || Object.getPrototypeOf(CookiesProvider)).call(this, props));
+
+    if (props.cookies) {
+      _this.cookies = props.cookies;
+    } else {
+      _this.cookies = new _universalCookie2.default();
+    }
+    return _this;
+  }
+
+  _createClass(CookiesProvider, [{
+    key: 'getChildContext',
+    value: function getChildContext() {
+      return {
+        cookies: this.cookies
+      };
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return this.props.children;
+    }
+  }]);
+
+  return CookiesProvider;
+}(_react.Component);
+
+CookiesProvider.propTypes = {
+  children: _propTypes.node,
+  cookies: (0, _propTypes.instanceOf)(_universalCookie2.default)
+};
+CookiesProvider.childContextTypes = {
+  cookies: (0, _propTypes.instanceOf)(_universalCookie2.default).isRequired
+};
+exports.default = CookiesProvider;
+module.exports = exports['default'];
+
+/***/ }),
+/* 329 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.default = withCookies;
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(3);
+
+var _universalCookie = __webpack_require__(322);
+
+var _universalCookie2 = _interopRequireDefault(_universalCookie);
+
+var _hoistNonReactStatics = __webpack_require__(330);
+
+var _hoistNonReactStatics2 = _interopRequireDefault(_hoistNonReactStatics);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+function withCookies(Component) {
+  function Wrapper(props, _ref) {
+    var cookies = _ref.cookies;
+
+    var wrappedComponentRef = props.wrappedComponentRef,
+        remainingProps = _objectWithoutProperties(props, ['wrappedComponentRef']);
+
+    return _react2.default.createElement(Component, _extends({}, remainingProps, {
+      cookies: cookies,
+      ref: wrappedComponentRef
+    }));
+  }
+
+  Wrapper.displayName = 'withCookies(' + (Component.displayName || Component.name) + ')';
+  Wrapper.WrappedComponent = Component;
+
+  Wrapper.propTypes = {
+    wrappedComponentRef: _propTypes.func
+  };
+
+  Wrapper.contextTypes = {
+    cookies: (0, _propTypes.instanceOf)(_universalCookie2.default).isRequired
+  };
+
+  return (0, _hoistNonReactStatics2.default)(Wrapper, Component);
+}
+module.exports = exports['default'];
+
+/***/ }),
+/* 330 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/**
+ * Copyright 2015, Yahoo! Inc.
+ * Copyrights licensed under the New BSD License. See the accompanying LICENSE file for terms.
+ */
+
+
+var REACT_STATICS = {
+    childContextTypes: true,
+    contextTypes: true,
+    defaultProps: true,
+    displayName: true,
+    getDefaultProps: true,
+    mixins: true,
+    propTypes: true,
+    type: true
+};
+
+var KNOWN_STATICS = {
+    name: true,
+    length: true,
+    prototype: true,
+    caller: true,
+    arguments: true,
+    arity: true
+};
+
+var isGetOwnPropertySymbolsAvailable = typeof Object.getOwnPropertySymbols === 'function';
+
+module.exports = function hoistNonReactStatics(targetComponent, sourceComponent, customStatics) {
+    if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
+        var keys = Object.getOwnPropertyNames(sourceComponent);
+
+        /* istanbul ignore else */
+        if (isGetOwnPropertySymbolsAvailable) {
+            keys = keys.concat(Object.getOwnPropertySymbols(sourceComponent));
+        }
+
+        for (var i = 0; i < keys.length; ++i) {
+            if (!REACT_STATICS[keys[i]] && !KNOWN_STATICS[keys[i]] && (!customStatics || !customStatics[keys[i]])) {
+                try {
+                    targetComponent[keys[i]] = sourceComponent[keys[i]];
+                } catch (error) {
+
+                }
+            }
+        }
+    }
+
+    return targetComponent;
+};
+
+
+/***/ }),
+/* 331 */,
+/* 332 */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed: SyntaxError: Unexpected token (33:37)\n\n\u001b[0m \u001b[90m 31 | \u001b[39m\n \u001b[90m 32 | \u001b[39m    \u001b[36mreturn\u001b[39m (\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 33 | \u001b[39m      \u001b[33m<\u001b[39m\u001b[33mdiv\u001b[39m className\u001b[33m=\u001b[39m\u001b[32m\"backdrop\"\u001b[39m style\u001b[33m=>\u001b[39m\n \u001b[90m    | \u001b[39m                                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 34 | \u001b[39m        \u001b[33m<\u001b[39m\u001b[33mdiv\u001b[39m className\u001b[33m=\u001b[39m\u001b[32m\"modal\"\u001b[39m style\u001b[33m=>\u001b[39m\n \u001b[90m 35 | \u001b[39m          {\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mprops\u001b[33m.\u001b[39mchildren}\n \u001b[90m 36 | \u001b[39m\u001b[0m\n");
 
 /***/ })
 /******/ ]);
