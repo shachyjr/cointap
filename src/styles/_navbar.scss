@@ -1,12 +1,17 @@
 #navbar-container {
-  // display: flex;
-  // justify-content: space-between;
-  // flex-direction: column;
+//   display: flex;
+//   justify-content: space-between;
+//   flex-direction: column;
 
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 150px;
+  height: 100%;
   .nav-link {
     display: inline-block;
     width: 100%;
-    padding: 20px 5px;
+    padding: 20px 0px;
   
     text-decoration: none;
     text-align: center;
@@ -28,6 +33,12 @@
       font-size: 30px;
       margin-bottom: 10px;
     }
+  }
+
+  .setting {
+    position: absolute;
+    bottom: 0;
+    color: green;
   }
 
   #user {

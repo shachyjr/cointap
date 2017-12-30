@@ -28,11 +28,21 @@ body {
   }
 
   #container {
-    display: grid;
-    grid-template-columns: 1fr 6fr;
-    grid-template-rows: 100%;
-    grid-gap: 35px;
+    // display: grid;
+    // grid-template-columns: 1fr 8fr;
+    // grid-template-rows: 100%;
+    // grid-gap: 35px;
 
-    margin: 35px;
+    // margin: 35px;
+
+    #pages {
+      // background-color: yellow;
+      position: absolute;
+      top: 0;
+      left: 150px;
+      width: calc(100% - 150px);
+      height: 100%;
+      overflow: scroll;
+    }
   }
 }

@@ -11,10 +11,14 @@ class Cell extends Component {
       change24Hour: '',
       change24HourPCT: '',
       flags: '',
+      tracking: false,
     };
   }
 
   componentDidMount() {
+    /* Get tracked prices */
+
+    /* Get subscription information */
     subToCurrentAgg((err, currentData) => {
       const {
         PRICE,
@@ -30,7 +34,14 @@ class Cell extends Component {
         change24HourPCT: CHANGE24HOURPCT,
         flags: FLAGS,
       });
+
+      // if (PRICE )
     });
+  }
+
+  startTracking() {
+    // default 15%
+    this.setState({ tracking: true });
   }
 
   render() {
@@ -52,6 +63,7 @@ class Cell extends Component {
         <i key="flag" className={`fa fa-${flagState} ${flagState}`}></i>
         <div key="change-24">{this.state.change24Hour}</div>
         <div key="change-24-PCT">{`${this.state.change24HourPCT} %`}</div>
+        <button onClick={this.startTracking}>Track</button>
       </div>
     );
   }

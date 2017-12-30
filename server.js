@@ -18,21 +18,39 @@ app.use(cookieParser());
   API END POINTS
  * * * * * * * * * * */
 
+/* API ENDPOINT RESPONSE GUIDE
+
+  * Response type: JSON object
+  * For 401 unauthorized responses, expect just a status with no message
+  {
+    user: 'user object',
+    error: 'error message',
+    message: 'response message - including extra details about response'
+  }
+
+*/
+
 app.post('/api/login', UserController.verify, cookieController.setCookie, (req, res) => {
-  res.status = 200;
-  res.json(res.locals.user);
+  res.status(200).json({ user: res.locals.user });
   return res.end();
 });
 
 app.post('/api/register', UserController.add, cookieController.setCookie, (req, res) => {
-  res.status = 200;
-  res.json(res.locals.user);
+  res.status(200).json({ user: res.locals.user });
   return res.end();
 });
 
-app.get('/api/getUser', cookieController.verifyCookie, (req, res) => {
-  res.status = 200;
-  res.json(res.locals.user);
+/*
+  * retrieve user from cookie, if valid cookie exists
+  * replace old jwt token with a refreshed one
+*/
+app.get('/api/userFromSession', cookieController.verifyCookie, cookieController.setCookie, (req, res) => {
+  res.status(200).json({ user: res.locals.user });
+  return res.end();
+});
+
+app.post('/api/trackedCoins', UserController.getTracked, (req, res) => {
+  res.status(200).json({ user: res.locals.user });
   return res.end();
 });
 
@@ -41,5 +59,5 @@ app.get('*', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`coinTAP listening on ${PORT}`);
+  console.log(`cointap listening on ${PORT}`);
 });

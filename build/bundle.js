@@ -26676,7 +26676,10 @@ var App = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
-    _this.state = { user: null };
+    _this.state = {
+      user: null,
+      error: null
+    };
 
     _this.redirect = _this.redirect.bind(_this);
     _this.authorize = _this.authorize.bind(_this);
@@ -26688,22 +26691,29 @@ var App = function (_Component) {
     value: function componentWillMount() {
       var _this2 = this;
 
-      console.log('Mounting App');
+      /* 
+        Makes call to server to verify if user had a valid session using cookie 
+        This should only run on refresh when application is remounted, so that user object can persist through entire application
+      */
+
       var xhttp = new XMLHttpRequest();
-      xhttp.open('GET', '/api/getUser', true);
+      xhttp.open('GET', '/api/userFromSession', true);
       xhttp.onreadystatechange = function () {
         if (xhttp.readyState === 4) {
-          console.log(xhttp.status);
+          console.log('App componentDidMount status', xhttp.status);
+          var respData = JSON.parse(xhttp.responseText);
+
           switch (xhttp.status) {
             case 200:
-              // authenticated
-              _this2.authorize(JSON.parse(xhttp.responseText));
+              // found user
+              _this2.authorize(respData.user);
               break;
             case 401:
-              // username already exists
+              // cookie not found or user not found from exsiting cookie
               break;
             case 500:
-              // username already exists
+              // internal error
+
               break;
             default:
             // error message
@@ -26735,25 +26745,29 @@ var App = function (_Component) {
         { id: 'container' },
         _react2.default.createElement(_NavBar2.default, { key: 'navbar-component' }),
         _react2.default.createElement(
-          _reactRouter.Switch,
-          { key: 'routes' },
-          _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/', render: function render() {
-              return _react2.default.createElement(_Dashboard2.default, null);
-            } }),
-          ',',
-          _react2.default.createElement(_reactRouter.Route, { path: '/login', render: function render() {
-              return _react2.default.createElement(_Login2.default, { authorize: _this3.authorize, redirect: _this3.redirect });
-            } }),
-          ',',
-          _react2.default.createElement(_reactRouter.Route, { path: '/register', render: function render() {
-              return _react2.default.createElement(_Register2.default, { authorize: _this3.authorize, redirect: _this3.redirect });
-            } }),
-          ',',
-          _react2.default.createElement(_PrivateRoute2.default, { path: '/track', component: _Track2.default, user: this.state.user }),
-          ',',
-          _react2.default.createElement(_reactRouter.Route, { path: '/*', render: function render() {
-              return _react2.default.createElement(_NotFound2.default, null);
-            } })
+          'div',
+          { id: 'pages' },
+          _react2.default.createElement(
+            _reactRouter.Switch,
+            { key: 'routes' },
+            _react2.default.createElement(_reactRouter.Route, { exact: true, path: '/', render: function render() {
+                return _react2.default.createElement(_Dashboard2.default, null);
+              } }),
+            ',',
+            _react2.default.createElement(_reactRouter.Route, { path: '/login', render: function render() {
+                return _react2.default.createElement(_Login2.default, { authorize: _this3.authorize, redirect: _this3.redirect });
+              } }),
+            ',',
+            _react2.default.createElement(_reactRouter.Route, { path: '/register', render: function render() {
+                return _react2.default.createElement(_Register2.default, { authorize: _this3.authorize, redirect: _this3.redirect });
+              } }),
+            ',',
+            _react2.default.createElement(_PrivateRoute2.default, { path: '/track', component: _Track2.default, user: this.state.user }),
+            ',',
+            _react2.default.createElement(_reactRouter.Route, { path: '/*', render: function render() {
+                return _react2.default.createElement(_NotFound2.default, null);
+              } })
+          )
         )
       );
     }
@@ -26880,7 +26894,7 @@ var NavBar = function (_Component) {
         ),
         _react2.default.createElement(
           'div',
-          { className: 'nav-link' },
+          { className: 'nav-link setting' },
           _react2.default.createElement('i', { className: 'fa fa-gears' }),
           _react2.default.createElement(
             'h4',
@@ -26929,7 +26943,8 @@ var Dashboard = function Dashboard() {
     _react2.default.createElement(_Cell2.default, { currencyType: 'DASH' }),
     _react2.default.createElement(_Cell2.default, { currencyType: 'NXT' }),
     _react2.default.createElement(_Cell2.default, { currencyType: 'ZEC' }),
-    _react2.default.createElement(_Cell2.default, { currencyType: 'DGB' })
+    _react2.default.createElement(_Cell2.default, { currencyType: 'DGB' }),
+    _react2.default.createElement(_Cell2.default, { currencyType: 'BCH' })
   );
 };
 
@@ -26981,7 +26996,8 @@ var Cell = function (_Component) {
       price: '',
       change24Hour: '',
       change24HourPCT: '',
-      flags: ''
+      flags: '',
+      tracking: false
     };
     return _this;
   }
@@ -26991,6 +27007,9 @@ var Cell = function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
+      /* Get tracked prices */
+
+      /* Get subscription information */
       (0, _api2.default)(function (err, currentData) {
         var _currentData$props$cu = currentData[_this2.props.currencyType],
             PRICE = _currentData$props$cu.PRICE,
@@ -27006,7 +27025,15 @@ var Cell = function (_Component) {
           change24HourPCT: CHANGE24HOURPCT,
           flags: FLAGS
         });
+
+        // if (PRICE )
       });
+    }
+  }, {
+    key: 'startTracking',
+    value: function startTracking() {
+      // default 15%
+      this.setState({ tracking: true });
     }
   }, {
     key: 'render',
@@ -27045,6 +27072,11 @@ var Cell = function (_Component) {
           'div',
           { key: 'change-24-PCT' },
           this.state.change24HourPCT + ' %'
+        ),
+        _react2.default.createElement(
+          'button',
+          { onClick: this.startTracking },
+          'Track'
         )
       );
     }
@@ -27116,7 +27148,8 @@ var currentData = {
   DASH: {},
   NXT: {},
   ZEC: {},
-  DGB: {}
+  DGB: {},
+  BCH: {}
 };
 
 /* extract will modify the data recieved from the socket and extract/format the data desired and assign it to the currentData object */
@@ -27143,7 +27176,7 @@ var extract = function extract(data) {
 
 /* function subscribes to event on external socket, cleans up data, and envoke the specified callback */
 var subToCurrentAgg = function subToCurrentAgg(callback) {
-  var subscribe = ['5~CCCAGG~BTC~USD', '5~CCCAGG~ETH~USD', '5~CCCAGG~LTC~USD', '5~CCCAGG~XMR~USD', '5~CCCAGG~DASH~USD', '5~CCCAGG~NXT~USD', '5~CCCAGG~ZEC~USD', '5~CCCAGG~DGB~USD'];
+  var subscribe = ['5~CCCAGG~BTC~USD', '5~CCCAGG~ETH~USD', '5~CCCAGG~LTC~USD', '5~CCCAGG~XMR~USD', '5~CCCAGG~DASH~USD', '5~CCCAGG~NXT~USD', '5~CCCAGG~ZEC~USD', '5~CCCAGG~DGB~USD', '5~CCCAGG~BCH~USD'];
 
   socket.emit('SubAdd', { subs: subscribe });
 
@@ -30824,6 +30857,12 @@ var Track = function (_Component) {
   }
 
   _createClass(Track, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      /* Fetch tracked items for user */
+      this.props.user;
+    }
+  }, {
     key: "render",
     value: function render() {
       return _react2.default.createElement(
@@ -30912,11 +30951,18 @@ var Login = function (_Component) {
       xhttp.open('POST', '/api/login', true);
       xhttp.onreadystatechange = function () {
         if (xhttp.readyState === 4) {
-          console.log(xhttp.status);
+          var respData = JSON.parse(xhttp.responseText);
+
+          console.log(xhttp.status + ' : ' + respData.error);
+
           switch (xhttp.status) {
             case 200:
               // authenticated
-              _this2.props.authorize(JSON.parse(xhttp.responseText));
+              _this2.props.authorize(respData.user);
+              break;
+            case 400:
+              // username specified does not exist
+
               break;
             case 401:
               // incorrect username or password
@@ -31076,11 +31122,14 @@ var Register = function (_Component) {
       xhttp.open('POST', '/api/register', true);
       xhttp.onreadystatechange = function () {
         if (xhttp.readyState === 4) {
-          console.log(xhttp.status);
+          var respData = JSON.parse(xhttp.responseText);
+
+          console.log(xhttp.status + ' : ' + respData.error);
+
           switch (xhttp.status) {
             case 200:
               // authenticated
-              _this2.props.authorize(JSON.parse(xhttp.responseText));
+              _this2.props.authorize(respData.user);
               break;
             case 409:
               // username already exists
@@ -31282,7 +31331,7 @@ exports = module.exports = __webpack_require__(134)(undefined);
 
 
 // module
-exports.push([module.i, "/* FONT FAMILY */\n/* COLORS */\n/* * * * * * * * * * \n  MIXINS\n* * * * * * * * * */\n#navbar-container .nav-link {\n  display: inline-block;\n  width: 100%;\n  padding: 20px 5px;\n  text-decoration: none;\n  text-align: center;\n  color: #69939d;\n  font-size: 16px; }\n  #navbar-container .nav-link:hover {\n    background-color: rgba(7, 142, 144, 0.1);\n    border: solid #0ac0c4 1px;\n    border-radius: 2px;\n    color: white; }\n  #navbar-container .nav-link:focus {\n    border-left: solid #d6f950 4px;\n    color: white; }\n  #navbar-container .nav-link i {\n    font-size: 30px;\n    margin-bottom: 10px; }\n\n#navbar-container #user {\n  background-color: #0b0c0e;\n  padding-top: 15px;\n  padding-bottom: 15px; }\n  #navbar-container #user:hover {\n    color: white;\n    border: none; }\n\n/* * * * * * * * * * \n  DASHBOARD PAGE STYLING\n* * * * * * * * * */\n#dashboard {\n  display: grid;\n  grid-template-columns: repeat(2, 1fr);\n  grid-gap: 20px; }\n  #dashboard .cell-block {\n    border: solid #69939d 1px;\n    border-radius: 5px;\n    background-color: #292c33;\n    box-shadow: 5px 5px 15px 1px rgba(0, 0, 0, 0.5);\n    padding: 10px;\n    text-align: center; }\n    #dashboard .cell-block:hover {\n      background-color: rgba(7, 142, 144, 0.1);\n      border: solid #0ac0c4 1px;\n      border-radius: 5px;\n      color: white; }\n    #dashboard .cell-block .emphasize {\n      /* color: #760092; */\n      /* color: #9f00c8; */\n      color: #d6f950;\n      font-size: 48px; }\n\n.caret-up {\n  font-size: 42px;\n  color: #50bd1d; }\n\n.caret-down {\n  font-size: 42px;\n  color: #ff3636; }\n\n.hide {\n  visibility: hidden; }\n\n/* * * * * * * * * * \n  LOGIN PAGE STYLING\n* * * * * * * * * */\n.auth-form-container {\n  border: solid #69939d 1px;\n  border-radius: 5px;\n  background-color: #292c33;\n  box-shadow: 5px 5px 15px 1px rgba(0, 0, 0, 0.5);\n  width: 410px;\n  display: grid;\n  grid-template-columns: 1fr;\n  grid-template-rows: 55px minmax(200px, auto);\n  /* Remove predefined styles for input */ }\n  .auth-form-container .header {\n    border: solid #69939d 2px;\n    background-color: #d6f950;\n    color: #292c33;\n    font-size: 24px;\n    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);\n    letter-spacing: 3px;\n    line-height: 55px; }\n  .auth-form-container input {\n    background: none;\n    border: none; }\n    .auth-form-container input:focus {\n      outline: none; }\n  .auth-form-container .form-login {\n    padding: 35px;\n    display: grid;\n    grid-template-columns: 1fr;\n    grid-gap: 35px;\n    grid-template-rows: repeat(4, 40px); }\n  .auth-form-container .form-register {\n    padding: 35px;\n    display: grid;\n    grid-template-columns: 1fr;\n    grid-gap: 35px;\n    grid-template-rows: repeat(6, 40px); }\n  .auth-form-container .text-input {\n    display: flex;\n    justify-content: space-between;\n    padding: 0 15px;\n    border-radius: 5px;\n    border: solid white 1px;\n    background-color: white;\n    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5) inset; }\n    .auth-form-container .text-input input {\n      width: 100%;\n      margin-right: 10px;\n      font-family: \"Open Sans\", sans-serif;\n      font-size: 16px;\n      color: #1a1b20;\n      line-height: 40px; }\n    .auth-form-container .text-input i {\n      font-size: 16px;\n      line-height: 40px; }\n  .auth-form-container .submit-btn {\n    cursor: pointer;\n    width: 50%;\n    line-height: 40px;\n    font-size: 16px;\n    border-radius: 5px;\n    border-bottom: 2px solid #3e565c;\n    box-shadow: inset 0 -3px #3e565c;\n    background-color: #69939d;\n    color: white;\n    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);\n    letter-spacing: 3px; }\n    .auth-form-container .submit-btn:active {\n      box-shadow: 0 1px #34484d;\n      transform: translateY(2px); }\n  .auth-form-container .redir {\n    display: flex;\n    justify-content: space-between; }\n    .auth-form-container .redir a {\n      text-decoration: none;\n      color: #d6f950;\n      font-style: italic; }\n\n/* * * * * * * * * * \n  TRACKING PAGE STYLING\n* * * * * * * * * */\n/* * * * * * * * * * \n  GENERAL STYLING FOR ENTIRE APPLICATION\n* * * * * * * * * */\n* {\n  margin: 0;\n  padding: 0; }\n\nbody {\n  height: 100%;\n  width: 100%;\n  background-color: #1a1b20;\n  font-family: \"Open Sans\", sans-serif;\n  color: #69939d;\n  font-size: 16px;\n  /* set header font for header tags */ }\n  body h1, body h2, body h3, body h4, body h5, body h6 {\n    font-family: \"Montserrat\", sans-serif; }\n  body #container {\n    display: grid;\n    grid-template-columns: 1fr 6fr;\n    grid-template-rows: 100%;\n    grid-gap: 35px;\n    margin: 35px; }\n", ""]);
+exports.push([module.i, "/* FONT FAMILY */\n/* COLORS */\n/* * * * * * * * * * \n  MIXINS\n* * * * * * * * * */\n#navbar-container {\n  position: absolute;\n  top: 0;\n  left: 0;\n  width: 150px;\n  height: 100%; }\n  #navbar-container .nav-link {\n    display: inline-block;\n    width: 100%;\n    padding: 20px 0px;\n    text-decoration: none;\n    text-align: center;\n    color: #69939d;\n    font-size: 16px; }\n    #navbar-container .nav-link:hover {\n      background-color: rgba(7, 142, 144, 0.1);\n      border: solid #0ac0c4 1px;\n      border-radius: 2px;\n      color: white; }\n    #navbar-container .nav-link:focus {\n      border-left: solid #d6f950 4px;\n      color: white; }\n    #navbar-container .nav-link i {\n      font-size: 30px;\n      margin-bottom: 10px; }\n  #navbar-container .setting {\n    position: absolute;\n    bottom: 0;\n    color: green; }\n  #navbar-container #user {\n    background-color: #0b0c0e;\n    padding-top: 15px;\n    padding-bottom: 15px; }\n    #navbar-container #user:hover {\n      color: white;\n      border: none; }\n\n/* * * * * * * * * * \n  DASHBOARD PAGE STYLING\n* * * * * * * * * */\n#dashboard {\n  display: grid;\n  grid-template-columns: repeat(2, 1fr);\n  grid-gap: 20px; }\n  #dashboard .cell-block {\n    border: solid #69939d 1px;\n    border-radius: 5px;\n    background-color: #292c33;\n    box-shadow: 5px 5px 15px 1px rgba(0, 0, 0, 0.5);\n    padding: 10px;\n    text-align: center; }\n    #dashboard .cell-block:hover {\n      background-color: rgba(7, 142, 144, 0.1);\n      border: solid #0ac0c4 1px;\n      border-radius: 5px;\n      color: white; }\n    #dashboard .cell-block .emphasize {\n      /* color: #760092; */\n      /* color: #9f00c8; */\n      color: #d6f950;\n      font-size: 48px; }\n\n.caret-up {\n  font-size: 42px;\n  color: #50bd1d; }\n\n.caret-down {\n  font-size: 42px;\n  color: #ff3636; }\n\n.hide {\n  visibility: hidden; }\n\n/* * * * * * * * * * \n  LOGIN PAGE STYLING\n* * * * * * * * * */\n.auth-form-container {\n  border: solid #69939d 1px;\n  border-radius: 5px;\n  background-color: #292c33;\n  box-shadow: 5px 5px 15px 1px rgba(0, 0, 0, 0.5);\n  width: 410px;\n  display: grid;\n  grid-template-columns: 1fr;\n  grid-template-rows: 55px minmax(200px, auto);\n  /* Remove predefined styles for input */ }\n  .auth-form-container .header {\n    border: solid #69939d 2px;\n    background-color: #d6f950;\n    color: #292c33;\n    font-size: 24px;\n    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);\n    letter-spacing: 3px;\n    line-height: 55px; }\n  .auth-form-container input {\n    background: none;\n    border: none; }\n    .auth-form-container input:focus {\n      outline: none; }\n  .auth-form-container .form-login {\n    padding: 35px;\n    display: grid;\n    grid-template-columns: 1fr;\n    grid-gap: 35px;\n    grid-template-rows: repeat(4, 40px); }\n  .auth-form-container .form-register {\n    padding: 35px;\n    display: grid;\n    grid-template-columns: 1fr;\n    grid-gap: 35px;\n    grid-template-rows: repeat(6, 40px); }\n  .auth-form-container .text-input {\n    display: flex;\n    justify-content: space-between;\n    padding: 0 15px;\n    border-radius: 5px;\n    border: solid white 1px;\n    background-color: white;\n    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5) inset; }\n    .auth-form-container .text-input input {\n      width: 100%;\n      margin-right: 10px;\n      font-family: \"Open Sans\", sans-serif;\n      font-size: 16px;\n      color: #1a1b20;\n      line-height: 40px; }\n    .auth-form-container .text-input i {\n      font-size: 16px;\n      line-height: 40px; }\n  .auth-form-container .submit-btn {\n    cursor: pointer;\n    width: 50%;\n    line-height: 40px;\n    font-size: 16px;\n    border-radius: 5px;\n    border-bottom: 2px solid #3e565c;\n    box-shadow: inset 0 -3px #3e565c;\n    background-color: #69939d;\n    color: white;\n    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);\n    letter-spacing: 3px; }\n    .auth-form-container .submit-btn:active {\n      box-shadow: 0 1px #34484d;\n      transform: translateY(2px); }\n  .auth-form-container .redir {\n    display: flex;\n    justify-content: space-between; }\n    .auth-form-container .redir a {\n      text-decoration: none;\n      color: #d6f950;\n      font-style: italic; }\n\n/* * * * * * * * * * \n  TRACKING PAGE STYLING\n* * * * * * * * * */\n/* * * * * * * * * * \n  GENERAL STYLING FOR ENTIRE APPLICATION\n* * * * * * * * * */\n* {\n  margin: 0;\n  padding: 0; }\n\nbody {\n  height: 100%;\n  width: 100%;\n  background-color: #1a1b20;\n  font-family: \"Open Sans\", sans-serif;\n  color: #69939d;\n  font-size: 16px;\n  /* set header font for header tags */ }\n  body h1, body h2, body h3, body h4, body h5, body h6 {\n    font-family: \"Montserrat\", sans-serif; }\n  body #container #pages {\n    position: absolute;\n    top: 0;\n    left: 150px;\n    width: calc(100% - 150px);\n    height: 100%;\n    overflow: scroll; }\n", ""]);
 
 // exports
 

@@ -36,11 +36,14 @@ class Register extends Component {
     xhttp.open('POST', '/api/register', true);
     xhttp.onreadystatechange = () => {
       if (xhttp.readyState === 4) {
-        console.log(xhttp.status);
+        const respData = JSON.parse(xhttp.responseText);
+
+        console.log(`${xhttp.status} : ${respData.error}`);
+        
         switch (xhttp.status) {
           case 200:
             // authenticated
-            this.props.authorize(JSON.parse(xhttp.responseText));
+            this.props.authorize(respData.user);
             break;
           case 409:
             // username already exists

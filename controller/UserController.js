@@ -9,10 +9,12 @@ UserController.add = (req, res, next) => {
   // check if user name already exists
   const username = req.body.username.toLowerCase();
   User.findOne({ username }, (dbFindErr, foundUser) => {
-    if (dbFindErr) return res.sendStatus(500);
+    if (dbFindErr) {
+      res.status(500).json({ error: dbFindErr });
+      return res.end();
+    }
     if (foundUser) {
-      res.status = 409;
-      res.write(JSON.stringify({ error: 'Username already exists' }));
+      res.status(409).json({ error: 'Username already exists' });
       return res.end();
     }
 
@@ -27,9 +29,12 @@ UserController.add = (req, res, next) => {
         email: req.body.email,
         password: hash,
       }, (dbErr, user) => {
-        if (dbErr) return res.sendStatus(500);
+        if (dbErr) {
+          res.status(500).json({ error: dbErr });
+          return res.end();
+        }
         res.locals.user = user;
-        next();
+        return next();
       });
     });
   });
@@ -37,19 +42,35 @@ UserController.add = (req, res, next) => {
 
 UserController.verify = (req, res, next) => {
   User.findOne({ username: req.body.username.toLowerCase() }, (dbErr, user) => {
-    if (dbErr) return res.sendStatus(500);
-    // TODO: if !user
+    if (dbErr) {
+      res.status(500).json({ error: dbErr });
+      return res.end();
+    }
+    // username specified is not a registered user
+    if (!user) {
+      res.status(400).json({ error: 'Username specified does not exist' });
+      return res.end();
+    }
     // make password check even if user specified does not exist to increase security
     const passw = user ? user.password : 'temp';
     bcrypt.compare(req.body.password, passw, (err, result) => {
       if (!result) {
-        res.status(401);
-        res.write(JSON.stringify({ error: 'Username or password is incorrect' }));
+        res.status(401).json({ error: 'Username or password is incorrect' });
         return res.end();
       }
       res.locals.user = user;
-      next();
+      return next();
     });
+  });
+};
+
+UserController.getTracked = (req, res, next) => {
+  const username = req.body.username.toLowerCase();
+  User.findOne({ username }, (dbErr, user) => {
+    if (dbErr) {
+      // res.jsonn({})
+    }
+    return res.sendStatus(500);
   });
 };
 

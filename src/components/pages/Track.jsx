@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 
 class Track extends Component {
+  componentDidMount() {
+    /* Fetch tracked items for user */ 
+    this.props.user
+  }
   render() {
     return (
       <div id="tracking">

@@ -14,29 +14,39 @@ import '../styles/style.scss';
 class App extends Component {
   constructor() {
     super();
-    this.state = { user: null };
+    this.state = {
+      user: null,
+      error: null
+    };
 
     this.redirect = this.redirect.bind(this);
     this.authorize = this.authorize.bind(this);
   }
 
   componentWillMount() {
-    console.log('Mounting App');
+    /* 
+      Makes call to server to verify if user had a valid session using cookie 
+      This should only run on refresh when application is remounted, so that user object can persist through entire application
+    */
+
     const xhttp = new XMLHttpRequest();
-    xhttp.open('GET', '/api/getUser', true);
+    xhttp.open('GET', '/api/userFromSession', true);
     xhttp.onreadystatechange = () => {
       if (xhttp.readyState === 4) {
-        console.log(xhttp.status);
+        console.log('App componentDidMount status', xhttp.status);
+        const respData = JSON.parse(xhttp.responseText);
+
         switch (xhttp.status) {
           case 200:
-            // authenticated
-            this.authorize(JSON.parse(xhttp.responseText));
+            // found user
+            this.authorize(respData.user);
             break;
-          case 401:
-            // username already exists
+          case 401: 
+            // cookie not found or user not found from exsiting cookie
             break;
           case 500:
-            // username already exists
+            // internal error
+
             break;
           default:
             // error message
@@ -61,13 +71,15 @@ class App extends Component {
     return (
       <div id="container">
         <NavBar key="navbar-component"/>
-        <Switch key="routes">
-          <Route exact path='/' render={() => <Dashboard/>} />,
-          <Route path='/login' render={() => <Login authorize={this.authorize} redirect={this.redirect} />} />,
-          <Route path='/register' render={() => <Register authorize={this.authorize} redirect={this.redirect} />} />,
-          <PrivateRoute path="/track" component={Track} user={this.state.user} />,
-          <Route path="/*" render={() => <NotFound />} />
-        </Switch>
+        <div id="pages">
+          <Switch key="routes">
+            <Route exact path='/' render={() => <Dashboard/>} />,
+            <Route path='/login' render={() => <Login authorize={this.authorize} redirect={this.redirect} />} />,
+            <Route path='/register' render={() => <Register authorize={this.authorize} redirect={this.redirect} />} />,
+            <PrivateRoute path="/track" component={Track} user={this.state.user} />,
+            <Route path="/*" render={() => <NotFound />} />
+          </Switch>
+        </div>
       </div> 
     );
   }
