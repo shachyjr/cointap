@@ -31672,7 +31672,7 @@ var Login = function (_Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'text-input' },
-                _react2.default.createElement('input', { type: 'text', autoComplete: 'username', onChange: this.usernameChange, placeholder: 'Username or email' }),
+                _react2.default.createElement('input', { type: 'text', autoComplete: 'username', onChange: this.usernameChange, placeholder: 'Username or email', required: true }),
                 _react2.default.createElement('i', { className: 'fa fa-user-o' })
               )
             ),
@@ -31682,7 +31682,7 @@ var Login = function (_Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'text-input' },
-                _react2.default.createElement('input', { type: 'password', autoComplete: 'current-password', onChange: this.passwordChange, placeholder: 'Password' }),
+                _react2.default.createElement('input', { type: 'password', autoComplete: 'current-password', onChange: this.passwordChange, placeholder: 'Password', required: true }),
                 _react2.default.createElement('i', { className: 'fa fa-lock' })
               )
             ),
@@ -31837,7 +31837,7 @@ var Register = function (_Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'text-input' },
-                _react2.default.createElement('input', { type: 'text', autoComplete: 'name', onChange: this.nameChange, placeholder: 'Name' }),
+                _react2.default.createElement('input', { type: 'text', autoComplete: 'name', onChange: this.nameChange, placeholder: 'Name', required: true }),
                 _react2.default.createElement('i', { className: 'fa fa-id-card-o' })
               )
             ),
@@ -31847,7 +31847,7 @@ var Register = function (_Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'text-input' },
-                _react2.default.createElement('input', { type: 'text', autoComplete: 'username', onChange: this.usernameChange, placeholder: 'Username' }),
+                _react2.default.createElement('input', { type: 'text', autoComplete: 'username', onChange: this.usernameChange, placeholder: 'Username', required: true }),
                 _react2.default.createElement('i', { className: 'fa fa-user-o' })
               )
             ),
@@ -31857,7 +31857,7 @@ var Register = function (_Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'text-input' },
-                _react2.default.createElement('input', { type: 'email', autoComplete: 'email', onChange: this.emailChange, placeholder: 'Email' }),
+                _react2.default.createElement('input', { type: 'email', autoComplete: 'email', onChange: this.emailChange, placeholder: 'Email', required: true }),
                 _react2.default.createElement('i', { className: 'fa fa-envelope-o' })
               )
             ),
@@ -31867,7 +31867,7 @@ var Register = function (_Component) {
               _react2.default.createElement(
                 'div',
                 { className: 'text-input' },
-                _react2.default.createElement('input', { type: 'password', autoComplete: 'new-password', onChange: this.passwordChange, placeholder: 'Password' }),
+                _react2.default.createElement('input', { type: 'password', autoComplete: 'new-password', onChange: this.passwordChange, placeholder: 'Password', required: true }),
                 _react2.default.createElement('i', { className: 'fa fa-lock' })
               )
             ),
