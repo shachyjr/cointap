@@ -8,6 +8,7 @@ import Login from './pages/Login.jsx';
 import Register from './pages/Register.jsx';
 import NotFound from './pages/NotFound.jsx';
 import PrivateRoute from './PrivateRoute.jsx';
+import Footer from './Footer.jsx';
 
 import '../styles/style.scss';
 
@@ -21,6 +22,7 @@ class App extends Component {
 
     this.redirect = this.redirect.bind(this);
     this.authorize = this.authorize.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   componentWillMount() {
@@ -33,9 +35,8 @@ class App extends Component {
     xhttp.open('GET', '/api/userFromSession', true);
     xhttp.onreadystatechange = () => {
       if (xhttp.readyState === 4) {
-        console.log('App componentDidMount status', xhttp.status);
         const respData = JSON.parse(xhttp.responseText);
-
+        console.log(xhttp.responseText);
         switch (xhttp.status) {
           case 200:
             // found user
@@ -63,8 +64,14 @@ class App extends Component {
 
   authorize(user) {
     this.setState({ user: user });
-    console.log('state: ', this.state);
     this.props.history.push('/track');
+  }
+
+  logout() {
+    this.setState({ user: null });
+    const xhttp = new XMLHttpRequest();
+    xhttp.open('GET', '/api/logout', true);
+    xhttp.send();
   }
 
   render() {
@@ -76,10 +83,11 @@ class App extends Component {
             <Route exact path='/' render={() => <Dashboard/>} />,
             <Route path='/login' render={() => <Login authorize={this.authorize} redirect={this.redirect} />} />,
             <Route path='/register' render={() => <Register authorize={this.authorize} redirect={this.redirect} />} />,
-            <PrivateRoute path="/track" component={Track} user={this.state.user} />,
+            <PrivateRoute path="/track" component={Track} logout={this.logout} user={this.state.user} />,
             <Route path="/*" render={() => <NotFound />} />
           </Switch>
         </div>
+        <Footer />
       </div> 
     );
   }

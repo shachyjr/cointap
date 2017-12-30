@@ -26,8 +26,6 @@ class Login extends Component {
       if (xhttp.readyState === 4) {
         const respData = JSON.parse(xhttp.responseText);
 
-        console.log(`${xhttp.status} : ${respData.error}`);
-        
         switch (xhttp.status) {
           case 200:
             // authenticated

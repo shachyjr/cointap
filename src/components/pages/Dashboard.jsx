@@ -12,6 +12,11 @@ const Dashboard = () => (
     <Cell currencyType="ZEC"/>
     <Cell currencyType="DGB"/>
     <Cell currencyType="BCH"/>
+    <Cell currencyType="XRP"/>
+    <Cell currencyType="ETC"/>
+    <Cell currencyType="XEM"/>
+    <Cell currencyType="DCR"/>
+    <Cell currencyType="PIVX"/>
   </div>
 );
 

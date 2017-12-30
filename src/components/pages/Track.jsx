@@ -6,12 +6,15 @@ class Track extends Component {
     this.props.user
   }
   render() {
+    console.log(this.props.logout);
     return (
       <div id="tracking">
         <h1 key="track-heading">Hello {this.props.user.name}, <br/> Your Tracked Items Would Reside Here!</h1>
+        <button onClick={this.props.logout}>Logout</button>
       </div>
     );
   }
 }
+// <button onClick={}>Logout</button>
 
 export default Track;

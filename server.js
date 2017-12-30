@@ -30,33 +30,21 @@ app.use(cookieParser());
 
 */
 
-app.post('/api/login', UserController.verify, cookieController.setCookie, (req, res) => {
-  res.status(200).json({ user: res.locals.user });
-  return res.end();
-});
+app.post('/api/login', UserController.verify, cookieController.setCookie, (req, res) => res.status(200).json({ user: res.locals.user }).end());
 
-app.post('/api/register', UserController.add, cookieController.setCookie, (req, res) => {
-  res.status(200).json({ user: res.locals.user });
-  return res.end();
-});
+app.post('/api/register', UserController.add, cookieController.setCookie, (req, res) => res.status(200).json({ user: res.locals.user }).end());
+
+app.get('/api/logout', cookieController.removeCookie);
 
 /*
   * retrieve user from cookie, if valid cookie exists
-  * replace old jwt token with a refreshed one
+  * replace old jwt token with a refreshed one - this is a secure alternative to expiring the session and making the user login again often
 */
-app.get('/api/userFromSession', cookieController.verifyCookie, cookieController.setCookie, (req, res) => {
-  res.status(200).json({ user: res.locals.user });
-  return res.end();
-});
+app.get('/api/userFromSession', cookieController.verifyCookie, cookieController.setCookie, (req, res) => res.status(200).json({ user: res.locals.user }).end());
 
-app.post('/api/trackedCoins', UserController.getTracked, (req, res) => {
-  res.status(200).json({ user: res.locals.user });
-  return res.end();
-});
+app.post('/api/trackedCoins', UserController.getTracked, (req, res) => res.status(200).json({ user: res.locals.user }).end());
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
+app.get('*', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 
 app.listen(PORT, () => {
   console.log(`cointap listening on ${PORT}`);

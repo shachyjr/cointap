@@ -16,7 +16,7 @@ class NavBar extends Component {
             <h4>TRACK</h4>
           </NavLink>
         </div>
-        <div className="nav-link setting">
+        <div id="settings" className="nav-link">
           <i className="fa fa-gears"></i>
           <h4>SETTINGS</h4>
         </div>
