@@ -6,7 +6,6 @@ class Track extends Component {
     this.props.user
   }
   render() {
-    console.log(this.props.logout);
     return (
       <div id="tracking">
         <h1 key="track-heading">Hello {this.props.user.name}, <br/> Your Tracked Items Would Reside Here!</h1>

@@ -31535,7 +31535,6 @@ var Track = function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      console.log(this.props.logout);
       return _react2.default.createElement(
         "div",
         { id: "tracking" },
