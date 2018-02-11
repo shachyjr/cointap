@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
+require('dotenv').config();
 
 const User = require('../model/User.js');
-const { SALT_ROUNDS } = require('../utils/env.js');
 
 const UserController = {};
 
@@ -13,9 +13,8 @@ UserController.add = (req, res, next) => {
     if (foundUser) return res.status(409).json({ error: 'Username already exists' }).end();
 
     // encrypt password
-    bcrypt.hash(req.body.password, SALT_ROUNDS, (err, hash) => {
+    bcrypt.hash(req.body.password, Number(process.env.SALT_ROUNDS), (err, hash) => {
       if (err) throw new Error(err);
-
       // create user and store in db
       User.create({
         name: req.body.name,

@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import { Switch, Route, withRouter } from 'react-router';
 import { withCookies, Cookies } from 'react-cookie';
 import NavBar from './NavBar.jsx';
-import Dashboard from './pages/Dashboard.jsx';
-import Track from './pages/Track.jsx';
-import Login from './pages/Login.jsx';
-import Register from './pages/Register.jsx';
-import NotFound from './pages/NotFound.jsx';
-import PrivateRoute from './PrivateRoute.jsx';
+// import Dashboard from './pages/Dashboard.jsx';
+// import Track from './pages/Track.jsx';
+// import Login from './pages/Login.jsx';
+// import Register from './pages/Register.jsx';
+// import NotFound from './pages/NotFound.jsx';
+// import PrivateRoute from './PrivateRoute.jsx';
 import Footer from './Footer.jsx';
+import Content from './Content.jsx';
+import Loader from 'react-loaders';
 
 import '../styles/style.scss';
 
@@ -17,7 +19,8 @@ class App extends Component {
     super();
     this.state = {
       user: null,
-      error: null
+      error: null,
+      loading: true,
     };
 
     this.redirect = this.redirect.bind(this);
@@ -25,18 +28,17 @@ class App extends Component {
     this.logout = this.logout.bind(this);
   }
 
-  componentWillMount() {
+  componentDidMount() {
     /* 
       Makes call to server to verify if user had a valid session using cookie 
       This should only run on refresh when application is remounted, so that user object can persist through entire application
     */
-
+    // TODO: Put in higher order component
     const xhttp = new XMLHttpRequest();
     xhttp.open('GET', '/api/userFromSession', true);
     xhttp.onreadystatechange = () => {
       if (xhttp.readyState === 4) {
         const respData = JSON.parse(xhttp.responseText);
-        console.log(xhttp.responseText);
         switch (xhttp.status) {
           case 200:
             // found user
@@ -52,9 +54,10 @@ class App extends Component {
           default:
             // error message
         }
+        this.setState({ loading: false });
+        console.log("this loading", this.state.loading);
       }
     }
-    xhttp.setRequestHeader('Content-Type', 'application/json');
     xhttp.send();
   }
 
@@ -79,13 +82,8 @@ class App extends Component {
       <div id="container">
         <NavBar key="navbar-component"/>
         <div id="pages">
-          <Switch key="routes">
-            <Route exact path='/' render={() => <Dashboard/>} />,
-            <Route path='/login' render={() => <Login authorize={this.authorize} redirect={this.redirect} />} />,
-            <Route path='/register' render={() => <Register authorize={this.authorize} redirect={this.redirect} />} />,
-            <PrivateRoute path="/track" component={Track} logout={this.logout} user={this.state.user} />,
-            <Route path="/*" render={() => <NotFound />} />
-          </Switch>
+          <Content loading={this.state.loading} authorize={this.authorize} redirect={this.redirect} logout={this.logout} user={this.state.user}/>
+          
         </div>
         <Footer />
       </div> 
@@ -94,3 +92,10 @@ class App extends Component {
 }
 
 export default withCookies(withRouter(App));
+// <Switch key="routes">
+          //   <Route exact path='/' render={() => <Dashboard/>} />,
+          //   <Route path='/login' render={() => <Login authorize={this.authorize} redirect={this.redirect} />} />,
+          //   <Route path='/register' render={() => <Register authorize={this.authorize} redirect={this.redirect} />} />,
+          //   <PrivateRoute path="/track" component={Track} logout={this.logout} user={this.state.user} />,
+          //   <Route path="/*" render={() => <NotFound />} />
+          // </Switch>

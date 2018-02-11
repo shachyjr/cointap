@@ -64,9 +64,22 @@ const extract = (data) => {
   currentData[FROMSYMBOL].CHANGE24HOURPCT = `${(((currentData[FROMSYMBOL].PRICE - currentData[FROMSYMBOL].OPEN24HOUR) / currentData[FROMSYMBOL].OPEN24HOUR) * 100).toFixed(2)}`;
 };
 
-/* function subscribes to event on external socket, cleans up data, and envoke the specified callback */
+const createSub = (coins) => {
+  const subs = [];
+  coins.forEach((coin) => {
+    subs.push(`5~CCCAGG~${coin}~USD`);
+  });
+  console.log(subs);
+  return subs;
+};
+
+/* function subscribes to event on external socket, cleans up data, and envokes the specified callback */
+// const subToCurrentAgg = (coins, callback) => {
 const subToCurrentAgg = (callback) => {
   const subscribe = ['5~CCCAGG~BTC~USD', '5~CCCAGG~ETH~USD', '5~CCCAGG~LTC~USD', '5~CCCAGG~XMR~USD', '5~CCCAGG~DASH~USD', '5~CCCAGG~NXT~USD', '5~CCCAGG~ZEC~USD', '5~CCCAGG~DGB~USD', '5~CCCAGG~BCH~USD', '5~CCCAGG~XRP~USD', '5~CCCAGG~ETC~USD', '5~CCCAGG~XEM~USD', '5~CCCAGG~DCR~USD', '5~CCCAGG~PIVX~USD'];
+
+  // cpnst subscribe = createSub(coins);
+
 
   socket.emit('SubAdd', { subs: subscribe });
 

@@ -1,4 +1,4 @@
 /node_modules
 .eslintrc.js
-/utils/env.js
+.env
 /utils/styleScheme.txt

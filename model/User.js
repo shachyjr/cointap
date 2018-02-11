@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 const { Schema } = require('mongoose');
-const { MONGO_URI } = require('../utils/env.js');
+require('dotenv').config();
 
-mongoose.connect(MONGO_URI, { useMongoClient: true }, () => {
+console.log('mongo uri', process.env.MONGO_URI);
+mongoose.connect(process.env.MONGO_URI, { useMongoClient: true }, () => {
   console.log('Connection to database successful');
 });
 

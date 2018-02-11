@@ -4,7 +4,13 @@
 @import 'dashboard';
 @import 'authform';
 @import 'tracking';
-
+@import '~loaders.css/src/animations/line-scale.scss';
+// .loader-hidden {
+//   display: none;
+// }
+// .loader-active {
+//   display: block;
+// }
 /* * * * * * * * * * 
   GENERAL STYLING FOR ENTIRE APPLICATION
 * * * * * * * * * */
