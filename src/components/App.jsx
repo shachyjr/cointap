@@ -22,10 +22,6 @@ class App extends Component {
       error: null,
       loading: true,
     };
-
-    this.redirect = this.redirect.bind(this);
-    this.authorize = this.authorize.bind(this);
-    this.logout = this.logout.bind(this);
   }
 
   componentDidMount() {
@@ -54,23 +50,25 @@ class App extends Component {
           default:
             // error message
         }
-        this.setState({ loading: false });
-        console.log("this loading", this.state.loading);
       }
     }
     xhttp.send();
   }
+  
+  isLoading = () => this.setState({ loading: true })
 
-  redirect(route) {
+  isLoaded = () => this.setState({ loading: false })
+
+  redirect = (route) => {
     this.props.history.push(route);
   }
 
-  authorize(user) {
+  authorize = (user) => {
     this.setState({ user: user });
     this.props.history.push('/track');
   }
 
-  logout() {
+  logout = () => {
     this.setState({ user: null });
     const xhttp = new XMLHttpRequest();
     xhttp.open('GET', '/api/logout', true);
@@ -82,7 +80,7 @@ class App extends Component {
       <div id="container">
         <NavBar key="navbar-component"/>
         <div id="pages">
-          <Content loading={this.state.loading} authorize={this.authorize} redirect={this.redirect} logout={this.logout} user={this.state.user}/>
+          <Content loading={this.state.loading} isLoading={this.isLoading} isLoaded={this.isLoaded} authorize={this.authorize} redirect={this.redirect} logout={this.logout} user={this.state.user}/>
         </div>
         <Footer />
       </div> 
@@ -91,10 +89,3 @@ class App extends Component {
 }
 
 export default withCookies(withRouter(App));
-// <Switch key="routes">
-          //   <Route exact path='/' render={() => <Dashboard/>} />,
-          //   <Route path='/login' render={() => <Login authorize={this.authorize} redirect={this.redirect} />} />,
-          //   <Route path='/register' render={() => <Register authorize={this.authorize} redirect={this.redirect} />} />,
-          //   <PrivateRoute path="/track" component={Track} logout={this.logout} user={this.state.user} />,
-          //   <Route path="/*" render={() => <NotFound />} />
-          // </Switch>

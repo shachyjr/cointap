@@ -18,7 +18,7 @@ class Cell extends Component {
   componentDidMount() {
     /* Get tracked prices */
     const { currencyType } = this.props;
-    console.log(currencyType);
+    // console.log(currencyType);
     /* Get subscription information */
     subToCurrentAgg((err, currentData) => {
       const {
@@ -35,8 +35,6 @@ class Cell extends Component {
         change24HourPCT: CHANGE24HOURPCT,
         flags: FLAGS,
       });
-
-      // if (PRICE )
     });
   }
 
@@ -73,42 +71,5 @@ class Cell extends Component {
 Cell.propTypes = {
   currencyType: PropTypes.string.isRequired,
 };
-
-
-
-
-
-
-
-
-// const Cell = () => {
-//   // sets class for appropriate styling for increase or decrease
-//   let flagState;
-//   switch (this.state.flags) {
-//     case '1':
-//       flagState = 'caret-up';
-//       break;
-//     case '2':
-//       flagState = 'caret-down';
-//       break;
-//   }
-
-//   const { attribs } = this.props;
-//   return (
-//     <div className="cell-block">
-//       <h2 key="currency-name">{attribs.name}</h2>
-//       <div className="emphasize"key="price">{attribs.price}</div>
-//       <i key="flag" className={`fa fa-${flagState} ${flagState}`}></i>
-//       <div key="change-24">{attribs.change24Hour}</div>
-//       <div key="change-24-PCT">{`${attribs.change24HourPCT} %`}</div>
-//       <button onClick={this.startTracking}>Track</button>
-//     </div>
-//   );
-
-// }
-
-
-
-
 
 export default Cell;
