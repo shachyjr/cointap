@@ -64,7 +64,7 @@ class Cell extends Component {
         <i key="flag" className={`fa fa-${flagState} ${flagState}`}></i>
         <div key="change-24">{this.state.change24Hour}</div>
         <div key="change-24-PCT">{`${this.state.change24HourPCT} %`}</div>
-        <button onClick={this.startTracking}>Track</button>
+        {/*<button onClick={this.startTracking}>Track</button>*/}
       </div>
     );
   }

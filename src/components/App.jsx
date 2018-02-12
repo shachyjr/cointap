@@ -83,7 +83,6 @@ class App extends Component {
         <NavBar key="navbar-component"/>
         <div id="pages">
           <Content loading={this.state.loading} authorize={this.authorize} redirect={this.redirect} logout={this.logout} user={this.state.user}/>
-          
         </div>
         <Footer />
       </div> 
