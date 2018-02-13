@@ -35,6 +35,7 @@ class Cell extends Component {
         change24HourPCT: CHANGE24HOURPCT,
         flags: FLAGS,
       });
+      // we are done loading
     });
   }
 

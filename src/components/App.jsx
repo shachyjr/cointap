@@ -20,8 +20,14 @@ class App extends Component {
     this.state = {
       user: null,
       error: null,
-      loading: true,
+      loading: false,
     };
+
+
+  }
+  componentWillMount() {
+    // say we are loading
+    this.isLoading();
   }
 
   componentDidMount() {
@@ -50,6 +56,7 @@ class App extends Component {
           default:
             // error message
         }
+        this.isLoaded();
       }
     }
     xhttp.send();

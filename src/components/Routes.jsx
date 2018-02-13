@@ -7,9 +7,9 @@ import Register from './pages/Register.jsx';
 import NotFound from './pages/NotFound.jsx';
 import PrivateRoute from './PrivateRoute.jsx';
 
-const Routes = ({authorize, logout, redirect, user}) => (
+const Routes = ({authorize, logout, redirect, user, isLoading, isLoaded}) => (
   <Switch key="routes">
-    <Route exact path='/' render={() => <Dashboard/>} />,
+    <Route exact path='/' render={() => <Dashboard isLoading={isLoading} isLoaded={isLoaded} />} />,
     <Route path='/login' render={() => <Login authorize={authorize} redirect={redirect} />} />,
     <Route path='/register' render={() => <Register authorize={authorize} redirect={redirect} />} />,
     <PrivateRoute path="/track" component={Track} logout={logout} user={user} />,
